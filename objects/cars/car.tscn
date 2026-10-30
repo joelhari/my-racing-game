@@ -1,0 +1,72 @@
+[gd_scene format=3 uid="uid://ooxmr8h12uw0"]
+
+[ext_resource type="Script" uid="uid://c3gy6tsy43xa" path="res://objects/cars/car.gd" id="1_h4id6"]
+[ext_resource type="Shape3D" uid="uid://bc6vy364g4c50" path="res://assets/models/cars/car_body_collision_shape.tres" id="1_psn3e"]
+[ext_resource type="ArrayMesh" uid="uid://dveuyhebnes3j" path="res://assets/models/cars/car_body_mesh.tres" id="2_5daa5"]
+[ext_resource type="ArrayMesh" uid="uid://bsdtj1jjjp3wc" path="res://assets/models/cars/car_wheel_mesh.tres" id="3_h4id6"]
+[ext_resource type="Script" uid="uid://1380gbfa7i52" path="res://objects/cars/wheel.gd" id="4_fxc1d"]
+
+[sub_resource type="Curve" id="Curve_e2o6t"]
+_data = [Vector2(0, 0.15957439), 0.0, 0.0, 0, 0, Vector2(0.28368795, 0.862069), 0.0, 0.0, 0, 0, Vector2(0.6312057, 0.6954023), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Curve" id="Curve_h4id6"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.51324505, 0.8882979), 0.0, 0.0, 0, 0, Vector2(1, 0.16489363), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[node name="Car" type="RigidBody3D" unique_id=305355653 node_paths=PackedStringArray("wheels")]
+collision_mask = 8
+mass = 60.0
+script = ExtResource("1_h4id6")
+wheels = [NodePath("WheelFL"), NodePath("WheelFR"), NodePath("WheelRL"), NodePath("WheelRR")]
+acceleration_curve = SubResource("Curve_e2o6t")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1549398599]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
+shape = ExtResource("1_psn3e")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=948601113]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
+mesh = ExtResource("2_5daa5")
+
+[node name="WheelFL" type="RayCast3D" parent="." unique_id=501833128]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 0.68, -1.09)
+collision_mask = 8
+script = ExtResource("4_fxc1d")
+grip_curve = SubResource("Curve_h4id6")
+
+[node name="Wheel" type="MeshInstance3D" parent="WheelFL" unique_id=1311502490]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, -0.42, 0)
+mesh = ExtResource("3_h4id6")
+
+[node name="WheelFR" type="RayCast3D" parent="." unique_id=1485052264]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 0.68, -1.09)
+collision_mask = 8
+script = ExtResource("4_fxc1d")
+grip_curve = SubResource("Curve_h4id6")
+
+[node name="Wheel" type="MeshInstance3D" parent="WheelFR" unique_id=933574130]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.42, 0)
+mesh = ExtResource("3_h4id6")
+
+[node name="WheelRL" type="RayCast3D" parent="." unique_id=1214870063]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 0.68, 1.13)
+collision_mask = 8
+script = ExtResource("4_fxc1d")
+accelerates = true
+grip_curve = SubResource("Curve_h4id6")
+
+[node name="Wheel" type="MeshInstance3D" parent="WheelRL" unique_id=291246832]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, -0.42, 0)
+mesh = ExtResource("3_h4id6")
+
+[node name="WheelRR" type="RayCast3D" parent="." unique_id=1461451804]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 0.68, 1.13)
+collision_mask = 8
+script = ExtResource("4_fxc1d")
+accelerates = true
+grip_curve = SubResource("Curve_h4id6")
+
+[node name="Wheel" type="MeshInstance3D" parent="WheelRR" unique_id=641447124]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.42, 0)
+mesh = ExtResource("3_h4id6")
