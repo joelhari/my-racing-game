@@ -1,3 +1,25 @@
 [gd_scene format=3 uid="uid://bjtvbf3odn1oi"]
 
+[ext_resource type="PackedScene" uid="uid://c3fh0kq2pckke" path="res://assets/models/tracks/parking_garage_2.glb" id="1_e2o6t"]
+[ext_resource type="PackedScene" uid="uid://ooxmr8h12uw0" path="res://objects/cars/car.tscn" id="2_feb5d"]
+[ext_resource type="Script" uid="uid://bfss2ay3swupq" path="res://camera_controls.gd" id="3_feb5d"]
+
+[sub_resource type="Environment" id="Environment_6kggx"]
+
 [node name="Game" type="Node3D" unique_id=1279629421]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=504945264]
+environment = SubResource("Environment_6kggx")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1650940499]
+transform = Transform3D(0.69909847, -0.60673296, 0.37833378, 0, 0.5291194, 0.8485474, -0.7150254, -0.5932182, 0.3699065, 0, 7.498417, 0)
+
+[node name="parking_garage_2" parent="." unique_id=2038809731 instance=ExtResource("1_e2o6t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7534708, 0, 0.1812439)
+
+[node name="Car" parent="." unique_id=305355653 instance=ExtResource("2_feb5d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.642896, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Car" unique_id=625482712]
+transform = Transform3D(1, 0, 0, 0, 0.9728859, 0.23128554, 0, -0.23128554, 0.9728859, 0, 1.8634129, 3.8704123)
+script = ExtResource("3_feb5d")
