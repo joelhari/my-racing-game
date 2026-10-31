@@ -15,15 +15,19 @@ environment = SubResource("Environment_6kggx")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1650940499]
 transform = Transform3D(0.69909847, -0.60673296, 0.37833378, 0, 0.5291194, 0.8485474, -0.7150254, -0.5932182, 0.3699065, 0, 7.498417, 0)
 
-[node name="parking_garage_2" parent="." unique_id=2038809731 instance=ExtResource("1_e2o6t")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.6523976, 0.12512445, 57.897625)
+[node name="Camera3D" type="Camera3D" parent="." unique_id=625482712 node_paths=PackedStringArray("look_at_node")]
+transform = Transform3D(1, 0, 0, 0, 0.8452619, 0.5343523, 0, -0.5343523, 0.8452619, 60.904472, 2.98929, 28.73526)
+script = ExtResource("3_feb5d")
+look_at_node = NodePath("../Car/CameraLookAt")
 
 [node name="Car" parent="." unique_id=305355653 instance=ExtResource("2_feb5d")]
-transform = Transform3D(0.8607708, 0, 0.50899273, 0, 1, 0, -0.50899273, 0, 0.8607708, 59.331196, 0.26447225, 26.074654)
+transform = Transform3D(0.8607708, 0, 0.50899273, 0, 1, 0, -0.50899273, 0, 0.8607708, 57.316803, 0.26447225, 26.502163)
 
-[node name="Camera3D" type="Camera3D" parent="Car" unique_id=625482712]
-transform = Transform3D(1, 0, 0, 0, 0.84571105, 0.5336411, 0, -0.5336411, 0.84571105, 0, 2.7248178, 3.0909579)
-script = ExtResource("3_feb5d")
+[node name="CameraLookAt" type="Node3D" parent="Car" unique_id=1396160584]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5190289, 0)
+
+[node name="parking_garage_2" parent="." unique_id=2038809731 instance=ExtResource("1_e2o6t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -66.77867, 0.12512445, -116.716034)
 
 [node name="Track1" parent="." unique_id=114421550 instance=ExtResource("4_fc0e3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64.549484, 0, 10.860577)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64.500145, 0.04006195, 10.836422)
