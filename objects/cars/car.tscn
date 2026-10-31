@@ -14,11 +14,34 @@ point_count = 4
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.51324505, 0.8882979), 0.0, 0.0, 0, 0, Vector2(1, 0.16489363), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[node name="Car" type="RigidBody3D" unique_id=305355653 node_paths=PackedStringArray("wheels")]
+[sub_resource type="Gradient" id="Gradient_h4id6"]
+offsets = PackedFloat32Array(0, 0.6630435, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0.85882354, 0, 0, 0, 0.35686275)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_jmleq"]
+gradient = SubResource("Gradient_h4id6")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6kggx"]
+direction = Vector3(0, 0, 1)
+spread = 0.0
+gravity = Vector3(0, 0, 0)
+color_ramp = SubResource("GradientTexture1D_jmleq")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kn4uk"]
+transparency = 1
+vertex_color_use_as_albedo = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_cwtv4"]
+material = SubResource("StandardMaterial3D_kn4uk")
+size = Vector2(0.2, 0.2)
+orientation = 1
+
+[node name="Car" type="RigidBody3D" unique_id=305355653 node_paths=PackedStringArray("wheels", "skid_marks")]
 collision_mask = 8
 mass = 60.0
 script = ExtResource("1_h4id6")
 wheels = [NodePath("WheelFL"), NodePath("WheelFR"), NodePath("WheelRL"), NodePath("WheelRR")]
+skid_marks = [NodePath("SkidMarks/GPUParticles3D"), NodePath("SkidMarks/GPUParticles3D2"), NodePath("SkidMarks/GPUParticles3D3"), NodePath("SkidMarks/GPUParticles3D4")]
 acceleration_curve = SubResource("Curve_e2o6t")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1549398599]
@@ -70,3 +93,37 @@ grip_curve = SubResource("Curve_h4id6")
 [node name="Wheel" type="MeshInstance3D" parent="WheelRR" unique_id=641447124]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.42, 0)
 mesh = ExtResource("3_h4id6")
+
+[node name="SkidMarks" type="Node3D" parent="." unique_id=1570708186]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="SkidMarks" unique_id=746862990]
+emitting = false
+amount = 150
+lifetime = 1.5
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_6kggx")
+draw_pass_1 = SubResource("QuadMesh_cwtv4")
+
+[node name="GPUParticles3D2" type="GPUParticles3D" parent="SkidMarks" unique_id=1234098703]
+emitting = false
+amount = 150
+lifetime = 1.5
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_6kggx")
+draw_pass_1 = SubResource("QuadMesh_cwtv4")
+
+[node name="GPUParticles3D3" type="GPUParticles3D" parent="SkidMarks" unique_id=1319237526]
+emitting = false
+amount = 150
+lifetime = 1.5
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_6kggx")
+draw_pass_1 = SubResource("QuadMesh_cwtv4")
+
+[node name="GPUParticles3D4" type="GPUParticles3D" parent="SkidMarks" unique_id=1133724945]
+emitting = false
+amount = 150
+lifetime = 1.5
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_6kggx")
+draw_pass_1 = SubResource("QuadMesh_cwtv4")

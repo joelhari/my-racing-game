@@ -10,10 +10,12 @@ extends RayCast3D
 @export var spring_strength: float = 10000.0
 @export var spring_damping: float = 200.0
 @export var rest_dist: float = 0.42
-@export var over_extend: float = 0.0
+@export var over_extend: float = 0.2
 
 @export_group("Tire")
 @export var grip_curve: Curve
+@export var static_firction: float = 5
+@export var dynamic_friction: float = 1
 
 
 @onready var mesh: Node3D = get_child(0)
@@ -26,7 +28,8 @@ func _ready() -> void:
 func apply_wheel_physics_to_car(
     car: Car,
     accelerate_strength: float,
-    break_strength: float
+    break_strength: float,
+    skid_mark: GPUParticles3D
 ) -> void:
 
     if not is_colliding():
@@ -68,7 +71,8 @@ func apply_wheel_physics_to_car(
 
     # TODO: When back wheels are larger, e.g. the car is slightly tilted,
     #       applying the force in the spring up direction causes the car to move.
-    force_vector += (spring_force - spring_damping_force) * spring_up_direction
+    var normal_force: Vector3 = (spring_force - spring_damping_force) * spring_up_direction
+    force_vector += normal_force
     #force_vector += (spring_force - spring_damping_force) * contact_normal
     # ------------------------------------------------------------------------ #
 
@@ -100,18 +104,25 @@ func apply_wheel_physics_to_car(
     
     
     # --------- Lateral ------------------------------------------------- #
-    
-    var grip_factor: float = absf(wheel_lateral_velocity/wheel_velocity.length())
-    var lateral_traction: float = grip_curve.sample_baked(grip_factor) if is_finite(grip_factor) else 1
-    
     var gravity: float = car.get_gravity().y
-    var lateral_force: Vector3 = contact_lateral * wheel_lateral_velocity * lateral_traction * ((car.mass*gravity)/4.0)
+    var required_lateral_force: Vector3 = (
+        contact_lateral * wheel_lateral_velocity * ((car.mass*gravity)/4.0))
+    
+    var lateral_force: Vector3 = Vector3.ZERO
+    if required_lateral_force.length_squared() <= (static_firction * normal_force).length_squared():
+        lateral_force = required_lateral_force
+        skid_mark.emitting = false
+    else:
+        lateral_force = dynamic_friction * normal_force.length() * contact_lateral * -sign(wheel_lateral_velocity)
+        skid_mark.global_position = contact + Vector3.UP * 0.01
+        skid_mark.look_at(skid_mark.global_position + skid_mark.global_basis.z)
+        skid_mark.emitting = true
     
     # TODO: rename this shit
-    var forward_traction: float = 0.05
-    var forward_force: Vector3 = contact_forward * wheel_forward_velocity * forward_traction * ((car.mass*gravity)/4.0)
+    #var forward_traction: float = 0.05
+    #var forward_force: Vector3 = contact_forward * wheel_forward_velocity * forward_traction * ((car.mass*gravity)/4.0)
     
-    force_vector += lateral_force + forward_force
+    force_vector += lateral_force #+ forward_force
     # ------------------------------------------------------------------------ #
     
     

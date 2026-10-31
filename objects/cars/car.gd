@@ -3,6 +3,7 @@ extends RigidBody3D
 
 
 @export var wheels: Array[Wheel]
+@export var skid_marks: Array[GPUParticles3D]
 var steering_wheels: Array[Wheel]
 
 @export_group("Engine")
@@ -42,7 +43,6 @@ func _physics_process(delta: float) -> void:
     
     var accelerate_input: float = Input.get_action_strength("accelerate")
     var break_input: float = Input.get_action_strength("break")
-    print(accelerate_input, break_input)
     var accelerate_strength: float = 0.0
     var break_strength: float = 0.0
     
@@ -55,10 +55,11 @@ func _physics_process(delta: float) -> void:
     
     var grounded: bool = false
     
-    for wheel in wheels:
+    for i in range(4):
+        var wheel = wheels.get(i)
         wheel.force_raycast_update()
         wheel.apply_wheel_physics_to_car(
-            self, accelerate_strength, break_strength)
+            self, accelerate_strength, break_strength, skid_marks.get(i))
         
         if wheel.is_colliding():
             grounded = true
