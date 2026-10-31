@@ -7,15 +7,16 @@ extends RigidBody3D
 var steering_wheels: Array[Wheel]
 
 @export_group("Engine")
-@export var acceleration: float = 500.0
+@export var acceleration: float = 4000.0
 # for now just limit the speed with this variable
 @export var max_speed: float = 60.0
 # TODO: use acceleration curve together with gears and rpm
 @export var acceleration_curve: Curve
 
 @export_group("Drive Train")
-@export var breaking: float = 400.0
+@export var breaking: float = 2000.0
 @export var wheel_turn_speed: float = 2.0
+@export var wheel_min_turn_angle: float = deg_to_rad(5.0)
 @export var wheel_max_turn_angle: float = deg_to_rad(30.0)
 
 
@@ -75,7 +76,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _do_steering(delta: float) -> void:
-    var steering_input: float = Input.get_axis("right", "left") * wheel_turn_speed
+    var steering_input: float = Input.get_axis("right", "left")
     
     if is_zero_approx(steering_input):
         var wheel_rotation = move_toward(
@@ -84,8 +85,14 @@ func _do_steering(delta: float) -> void:
             wheel.rotation.y = wheel_rotation
     else:
         # TODO: Implement max turn angle base on car velocity
-        var wheel_rotation = clampf(
-            steering_wheels.get(0).rotation.y + (steering_input * delta),
-            -wheel_max_turn_angle, wheel_max_turn_angle)
+        var velocity: float = abs(-global_basis.z.dot(linear_velocity))
+        var turn_angle = steering_input * (
+            wheel_min_turn_angle + (
+                (wheel_max_turn_angle - wheel_min_turn_angle)
+                * (1 - (velocity / max_speed))
+            ))
+        var wheel_rotation = move_toward(
+            steering_wheels.get(0).rotation.y, turn_angle,
+            wheel_turn_speed * delta)
         for wheel in steering_wheels:
             wheel.rotation.y = wheel_rotation

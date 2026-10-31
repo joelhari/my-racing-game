@@ -38,10 +38,11 @@ orientation = 1
 
 [node name="Car" type="RigidBody3D" unique_id=305355653 node_paths=PackedStringArray("wheels", "skid_marks")]
 collision_mask = 8
-mass = 60.0
+mass = 950.0
 script = ExtResource("1_h4id6")
 wheels = [NodePath("WheelFL"), NodePath("WheelFR"), NodePath("WheelRL"), NodePath("WheelRR")]
 skid_marks = [NodePath("SkidMarks/GPUParticles3D"), NodePath("SkidMarks/GPUParticles3D2"), NodePath("SkidMarks/GPUParticles3D3"), NodePath("SkidMarks/GPUParticles3D4")]
+max_speed = 30.0
 acceleration_curve = SubResource("Curve_e2o6t")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1549398599]

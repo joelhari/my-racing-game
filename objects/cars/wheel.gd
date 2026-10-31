@@ -7,15 +7,15 @@ extends RayCast3D
 @export var breaks: bool = true
 
 @export_group("Suspension")
-@export var spring_strength: float = 10000.0
-@export var spring_damping: float = 200.0
+@export var spring_strength: float = 150000.0
+@export var spring_damping: float = 4000.0
 @export var rest_dist: float = 0.42
 @export var over_extend: float = 0.2
 
 @export_group("Tire")
 @export var grip_curve: Curve
 @export var static_firction: float = 5
-@export var dynamic_friction: float = 1
+@export var dynamic_friction: float = 3
 
 
 @onready var mesh: Node3D = get_child(0)
