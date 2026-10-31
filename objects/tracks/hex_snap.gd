@@ -13,14 +13,28 @@ func _process(_delta: float) -> void:
             continue
 
         var pos: Vector3 = child.position
-        var snapped := snap_to_hex(Vector2(pos.x, pos.z))
+        var snapped_position := snap_to_hex(Vector2(pos.x, pos.z))
 
-        if Vector2(pos.x, pos.z).distance_to(snapped) > 0.001:
+        if Vector2(pos.x, pos.z).distance_to(snapped_position) > 0.001:
             child.position = Vector3(
-                snapped.x,
+                snapped_position.x,
                 pos.y,
-                snapped.y
+                snapped_position.y
             )
+        
+        for c in child.get_children():
+            if c is not Node3D:
+                continue
+
+            pos = c.position
+            snapped_position = snap_to_hex(Vector2(pos.x, pos.z))
+            
+            if Vector2(pos.x, pos.z).distance_to(snapped_position) > 0.001:
+                c.position = Vector3(
+                    snapped_position.x,
+                    pos.y,
+                    snapped_position.y
+                )
 
 
 func snap_to_hex(point: Vector2) -> Vector2:
