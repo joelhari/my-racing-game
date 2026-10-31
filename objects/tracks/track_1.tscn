@@ -1,0 +1,91 @@
+[gd_scene format=3 uid="uid://dkxjluj8gsve1"]
+
+[ext_resource type="PackedScene" uid="uid://chkl8ewpe34tr" path="res://assets/models/tracks/track_straight.glb" id="2_87d7m"]
+[ext_resource type="Script" uid="uid://bxbv8q68b3etc" path="res://objects/tracks/hex_snap.gd" id="2_ak41n"]
+[ext_resource type="PackedScene" uid="uid://ch83k4074xymy" path="res://assets/models/tracks/track_curve_left.glb" id="3_87d7m"]
+[ext_resource type="PackedScene" uid="uid://dwouof4vkuuov" path="res://assets/models/tracks/track_curve_right.glb" id="4_tsy2k"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_6kggx"]
+size = Vector2(120, 120)
+orientation = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6kggx"]
+size = Vector3(120, 1, 120)
+
+[node name="Track1" type="Node3D" unique_id=114421550]
+script = ExtResource("2_ak41n")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=422301176]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.928203, 0.11093736, 12)
+collision_layer = 8
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=1849464095]
+mesh = SubResource("QuadMesh_6kggx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1276642076]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_6kggx")
+
+[node name="track_straight" parent="." unique_id=1052016034 instance=ExtResource("2_87d7m")]
+transform = Transform3D(0.8660253, 0, 0.49999997, 0, 1, 0, -0.49999997, 0, 0.8660253, -6.928203, 0, 12)
+
+[node name="track_straight5" parent="." unique_id=773804908 instance=ExtResource("2_87d7m")]
+transform = Transform3D(-0.8660253, 0, -0.4999999, 0, 1, 0, 0.4999999, 0, -0.8660253, 13.856406, 0, 0)
+
+[node name="track_straight6" parent="." unique_id=955922794 instance=ExtResource("2_87d7m")]
+transform = Transform3D(-0.8660253, 0, -0.4999999, 0, 1, 0, 0.4999999, 0, -0.8660253, 6.928203, 0, -12)
+
+[node name="track_straight7" parent="." unique_id=1718148446 instance=ExtResource("2_87d7m")]
+transform = Transform3D(0, 0, -0.9999999, 0, 1, 0, 0.9999999, 0, 0, -13.856406, 0, -24)
+
+[node name="track_straight8" parent="." unique_id=219963244 instance=ExtResource("2_87d7m")]
+transform = Transform3D(0, 0, -0.9999999, 0, 1, 0, 0.9999999, 0, 0, -27.712812, 0, -24)
+
+[node name="track_straight9" parent="." unique_id=3473722 instance=ExtResource("2_87d7m")]
+transform = Transform3D(8.742277e-08, 0, 0.9999999, 0, 1, 0, -0.9999999, 0, 8.742277e-08, -27.712812, 0, 0)
+
+[node name="track_straight2" parent="." unique_id=517499812 instance=ExtResource("2_87d7m")]
+transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, 0, 0, 24)
+
+[node name="track_straight3" parent="." unique_id=765277454 instance=ExtResource("2_87d7m")]
+transform = Transform3D(-0.86602527, 0, 0.50000006, 0, 1, 0, -0.50000006, 0, -0.86602527, 34.641018, 0, 36)
+
+[node name="track_straight4" parent="." unique_id=1083663498 instance=ExtResource("2_87d7m")]
+transform = Transform3D(-0.8660253, 0, 0.50000006, 0, 1, 0, -0.50000006, 0, -0.8660253, 27.712812, 0, 48)
+
+[node name="track_curve_left" parent="." unique_id=1687541352 instance=ExtResource("3_87d7m")]
+transform = Transform3D(1.1920929e-07, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, 1.1920929e-07, 6.928203, 0, 36)
+
+[node name="track_curve_left3" parent="." unique_id=1691534578 instance=ExtResource("3_87d7m")]
+transform = Transform3D(-0.86602527, 0, 0.5, 0, 1, 0, -0.5, 0, -0.86602527, -13.856406, 0, 0)
+
+[node name="track_curve_left2" parent="." unique_id=815323178 instance=ExtResource("3_87d7m")]
+transform = Transform3D(0.8660252, 0, -0.50000006, 0, 1, 0, 0.50000006, 0, 0.8660252, 20.784609, 0, 12)
+
+[node name="track_curve_right" parent="." unique_id=885058254 instance=ExtResource("4_tsy2k")]
+transform = Transform3D(-5.9604645e-08, 0, 1, 0, 1, 0, -1, 0, -5.9604645e-08, 0, 0, 48)
+
+[node name="track_curve_right2" parent="." unique_id=412353680 instance=ExtResource("4_tsy2k")]
+transform = Transform3D(-0.86602545, 0, 0.4999999, 0, 1, 0, -0.4999999, 0, -0.86602545, 6.928203, 0, 60)
+
+[node name="track_curve_right3" parent="." unique_id=146689184 instance=ExtResource("4_tsy2k")]
+transform = Transform3D(-0.8660253, 0, -0.5000001, 0, 1, 0, 0.5000001, 0, -0.8660253, 20.784609, 0, 60)
+
+[node name="track_curve_right7" parent="." unique_id=1245506143 instance=ExtResource("4_tsy2k")]
+transform = Transform3D(0.86602545, 0, 0.5, 0, 1, 0, -0.5, 0, 0.86602545, -41.569218, 0, -24)
+
+[node name="track_curve_right8" parent="." unique_id=14765128 instance=ExtResource("4_tsy2k")]
+transform = Transform3D(-5.9604645e-08, 0, 1, 0, 1, 0, -1, 0, -5.9604645e-08, -48.49742, 0, -12)
+
+[node name="track_curve_right9" parent="." unique_id=1658975550 instance=ExtResource("4_tsy2k")]
+transform = Transform3D(-0.86602545, 0, 0.49999997, 0, 1, 0, -0.49999997, 0, -0.86602545, -41.569218, 0, 0)
+
+[node name="track_curve_right4" parent="." unique_id=1369482463 instance=ExtResource("4_tsy2k")]
+transform = Transform3D(1.3411045e-07, 0, -0.99999994, 0, 1, 0, 0.99999994, 0, 1.3411045e-07, 41.569218, 0, 24)
+
+[node name="track_curve_right5" parent="." unique_id=1815041074 instance=ExtResource("4_tsy2k")]
+transform = Transform3D(0.8660254, 0, -0.4999998, 0, 1, 0, 0.4999998, 0, 0.8660254, 34.641018, 0, 12)
+
+[node name="track_curve_right6" parent="." unique_id=579813977 instance=ExtResource("4_tsy2k")]
+transform = Transform3D(0.8660254, 0, -0.4999998, 0, 1, 0, 0.4999998, 0, 0.8660254, 0, 0, -24)
