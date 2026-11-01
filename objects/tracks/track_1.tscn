@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://dkxjluj8gsve1"]
 
+[ext_resource type="PackedScene" uid="uid://bkh4h2mds24t2" path="res://objects/timing/start_finish_line.tscn" id="2_7ruu6"]
 [ext_resource type="PackedScene" uid="uid://chkl8ewpe34tr" path="res://assets/models/tracks/track_straight.glb" id="2_87d7m"]
 [ext_resource type="Script" uid="uid://bxbv8q68b3etc" path="res://objects/tracks/hex_snap.gd" id="2_ak41n"]
 [ext_resource type="PackedScene" uid="uid://ch83k4074xymy" path="res://assets/models/tracks/track_curve_left.glb" id="3_87d7m"]
@@ -36,6 +37,9 @@ shape = SubResource("BoxShape3D_6kggx")
 
 [node name="TrackPieces1" type="Node3D" parent="." unique_id=1947006259]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.712812, 0, 48)
+
+[node name="StartFinishLine" parent="TrackPieces1" unique_id=100495756 instance=ExtResource("2_7ruu6")]
+transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, -6.9282036, 0, 12)
 
 [node name="track_straight" parent="TrackPieces1" unique_id=1052016034 instance=ExtResource("2_87d7m")]
 transform = Transform3D(0.8660253, 0, 0.49999997, 0, 1, 0, -0.49999997, 0, 0.8660253, -6.928203, 0, 12)
@@ -102,6 +106,9 @@ transform = Transform3D(-0.86602545, 0, -0.4999999, 0, 1, 0, 0.4999999, 0, -0.86
 
 [node name="TrackPieces2" type="Node3D" parent="." unique_id=1180265468]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.928203, 0, 12)
+
+[node name="StartFinishLine2" parent="TrackPieces2" unique_id=1160236571 instance=ExtResource("2_7ruu6")]
+transform = Transform3D(0.86602545, 0, 0.5, 0, 1, 0, -0.5, 0, 0.86602545, -41.569218, 7.6293945e-06, 48)
 
 [node name="track_curve_left_borders" parent="TrackPieces2" unique_id=61974736 instance=ExtResource("6_gke1p")]
 transform = Transform3D(-0.8660254, 0, 0.50000006, 0, 1, 0, -0.50000006, 0, -0.8660254, -69.282036, 0, 0)
@@ -195,6 +202,9 @@ transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, -41.5692
 
 [node name="TrackPieces3" type="Node3D" parent="." unique_id=989327178]
 transform = Transform3D(1.5, 0, 0, 0, 1, 0, 0, 0, 1.5, 6.928203, 0, 12)
+
+[node name="StartFinishLine3" parent="TrackPieces3" unique_id=972997970 instance=ExtResource("2_7ruu6")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -34.641018, 7.6293945e-06, -12)
 
 [node name="track_curve_left_borders_low" parent="TrackPieces3" unique_id=932967121 instance=ExtResource("8_qjpm0")]
 transform = Transform3D(0.8660254, 0, -0.5, 0, 1, 0, 0.5, 0, 0.8660254, -55.425625, -7.6293945e-06, -24)

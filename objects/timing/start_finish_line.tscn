@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://bkh4h2mds24t2"]
+
+[ext_resource type="Script" uid="uid://b2fb21enwb3x4" path="res://objects/timing/start_finish_line.gd" id="1_kvu0y"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cwtv4"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_6kggx"]
+material = SubResource("StandardMaterial3D_cwtv4")
+size = Vector2(8, 0.6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6kggx"]
+size = Vector3(10.4, 2.4, 0.6)
+
+[node name="StartFinishLine" type="Node3D" unique_id=100495756]
+script = ExtResource("1_kvu0y")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=786851260]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+collision_layer = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D" unique_id=290100420]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.79, 0)
+mesh = SubResource("PlaneMesh_6kggx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=124862491]
+shape = SubResource("BoxShape3D_6kggx")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
