@@ -132,6 +132,6 @@ func apply_wheel_physics_to_car(
 
     # TODO: Decide wheater to apply the suspension force at the center of
     #       the wheel or on the road contact point.
-    contact = mesh.global_position
+    #contact = mesh.global_position
     var force_position: Vector3 = contact - car.global_position
     car.apply_force(force_vector, force_position)

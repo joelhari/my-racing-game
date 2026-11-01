@@ -10,6 +10,11 @@
 _data = [Vector2(0, 0.15957439), 0.0, 0.0, 0, 0, Vector2(0.28368795, 0.862069), 0.0, 0.0, 0, 0, Vector2(0.6312057, 0.6954023), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
+[sub_resource type="Curve" id="Curve_fxc1d"]
+_limits = [0.0, 30.0, 0.0, 100.0]
+_data = [Vector2(0, 30), 0.0, -1.5286224, 0, 0, Vector2(30.22533, 5.068966), -0.1891576, -0.1891576, 0, 0, Vector2(100, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
 [sub_resource type="Curve" id="Curve_h4id6"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.51324505, 0.8882979), 0.0, 0.0, 0, 0, Vector2(1, 0.16489363), 0.0, 0.0, 0, 0]
 point_count = 3
@@ -42,8 +47,8 @@ mass = 950.0
 script = ExtResource("1_h4id6")
 wheels = [NodePath("WheelFL"), NodePath("WheelFR"), NodePath("WheelRL"), NodePath("WheelRR")]
 skid_marks = [NodePath("SkidMarks/GPUParticles3D"), NodePath("SkidMarks/GPUParticles3D2"), NodePath("SkidMarks/GPUParticles3D3"), NodePath("SkidMarks/GPUParticles3D4")]
-max_speed = 30.0
 acceleration_curve = SubResource("Curve_e2o6t")
+wheel_turn_angle_curve = SubResource("Curve_fxc1d")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1549398599]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)

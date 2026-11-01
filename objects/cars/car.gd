@@ -14,10 +14,9 @@ var steering_wheels: Array[Wheel]
 @export var acceleration_curve: Curve
 
 @export_group("Drive Train")
-@export var breaking: float = 2000.0
+@export var breaking: float = 3500.0
 @export var wheel_turn_speed: float = 2.0
-@export var wheel_min_turn_angle: float = deg_to_rad(5.0)
-@export var wheel_max_turn_angle: float = deg_to_rad(30.0)
+@export var wheel_turn_angle_curve: Curve
 
 signal current_car_speed
 signal current_car_gear
@@ -94,11 +93,7 @@ func _do_steering(delta: float) -> void:
     else:
         # TODO: Implement max turn angle base on car velocity
         var velocity: float = abs(-global_basis.z.dot(linear_velocity))
-        var turn_angle = steering_input * (
-            wheel_min_turn_angle + (
-                (wheel_max_turn_angle - wheel_min_turn_angle)
-                * (1 - (velocity / max_speed))
-            ))
+        var turn_angle = steering_input * deg_to_rad(wheel_turn_angle_curve.sample_baked(velocity))
         var wheel_rotation = move_toward(
             steering_wheels.get(0).rotation.y, turn_angle,
             wheel_turn_speed * delta)
