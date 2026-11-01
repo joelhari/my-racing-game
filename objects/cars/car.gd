@@ -19,6 +19,9 @@ var steering_wheels: Array[Wheel]
 @export var wheel_min_turn_angle: float = deg_to_rad(5.0)
 @export var wheel_max_turn_angle: float = deg_to_rad(30.0)
 
+signal current_car_speed
+signal current_car_gear
+
 
 # -1 = reverse, 0 = neutral, 1+ forward
 var gear: int = 1
@@ -30,13 +33,16 @@ func get_point_velocity(point: Vector3) -> Vector3:
 
 func _ready() -> void:
     steering_wheels = [$WheelFL, $WheelFR]
+    current_car_gear.emit(gear)
 
 
 func _input(event: InputEvent) -> void:
     if event.is_action_pressed("shift_up") and gear < 5:
         gear += 1
+        current_car_gear.emit(gear)
     elif event.is_action_pressed("shift_down") and gear > -1:
         gear -= 1
+        current_car_gear.emit(gear)
 
 
 func _physics_process(delta: float) -> void:
@@ -53,6 +59,8 @@ func _physics_process(delta: float) -> void:
         accelerate_strength = sign(gear) * accelerate_input * acceleration
     if break_input > 0 and not is_zero_approx(velocity):
         break_strength = sign(velocity) * break_input * breaking
+    
+    current_car_speed.emit(int(velocity * 3.6))
     
     var grounded: bool = false
     

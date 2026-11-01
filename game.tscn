@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://ooxmr8h12uw0" path="res://objects/cars/car.tscn" id="2_feb5d"]
 [ext_resource type="Script" uid="uid://bfss2ay3swupq" path="res://camera_controls.gd" id="3_feb5d"]
 [ext_resource type="PackedScene" uid="uid://dkxjluj8gsve1" path="res://objects/tracks/track_1.tscn" id="4_fc0e3"]
+[ext_resource type="PackedScene" uid="uid://c7jp40jn36g3m" path="res://ui/driving_ui.tscn" id="5_7jktm"]
 
 [sub_resource type="Environment" id="Environment_6kggx"]
 
@@ -31,3 +32,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -66.77867, 0.12512445, -116.7
 
 [node name="Track1" parent="." unique_id=114421550 instance=ExtResource("4_fc0e3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64.500145, 0.04006195, 10.836422)
+
+[node name="DrivingUI" parent="." unique_id=844519246 instance=ExtResource("5_7jktm")]
+
+[connection signal="current_car_gear" from="Car" to="DrivingUI" method="_on_car_current_car_gear"]
+[connection signal="current_car_speed" from="Car" to="DrivingUI" method="_on_car_current_car_speed"]

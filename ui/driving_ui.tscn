@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://c7jp40jn36g3m"]
+
+[ext_resource type="Script" uid="uid://k7nayeh35tb3" path="res://ui/driving_ui.gd" id="1_mqm2l"]
+
+[node name="DrivingUI" type="Control" unique_id=844519246]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mqm2l")
+
+[node name="GridContainer" type="GridContainer" parent="." unique_id=1780595022]
+layout_mode = 1
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 81.0
+offset_bottom = 33.0
+columns = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="LabelSpeed" type="Label" parent="GridContainer" unique_id=673414049]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Speed"
+
+[node name="ValueSpeed" type="Label" parent="GridContainer" unique_id=628113025]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "45"
+
+[node name="LabelGear" type="Label" parent="GridContainer" unique_id=746896688]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Gear"
+
+[node name="ValueGear" type="Label" parent="GridContainer" unique_id=1839415014]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "0"
