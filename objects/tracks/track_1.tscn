@@ -3,32 +3,31 @@
 [ext_resource type="PackedScene" uid="uid://bkh4h2mds24t2" path="res://objects/timing/start_finish_line.tscn" id="2_7ruu6"]
 [ext_resource type="PackedScene" uid="uid://chkl8ewpe34tr" path="res://assets/models/tracks/track_straight.glb" id="2_87d7m"]
 [ext_resource type="Script" uid="uid://bxbv8q68b3etc" path="res://objects/tracks/hex_snap.gd" id="2_ak41n"]
-[ext_resource type="PackedScene" uid="uid://ch83k4074xymy" path="res://assets/models/tracks/track_curve_left.glb" id="3_87d7m"]
-[ext_resource type="PackedScene" uid="uid://dwouof4vkuuov" path="res://assets/models/tracks/track_curve_right.glb" id="4_tsy2k"]
 [ext_resource type="PackedScene" uid="uid://d36bk7vhbal0j" path="res://assets/models/tracks/track_straight_borders.glb" id="5_v543v"]
+[ext_resource type="PackedScene" uid="uid://5pwb8oe1ctu4" path="res://assets/models/tracks/track_split_borders_low.glb" id="6_7ruu6"]
 [ext_resource type="PackedScene" uid="uid://dhipu4cpo7v5" path="res://assets/models/tracks/track_curve_left_borders.glb" id="6_gke1p"]
 [ext_resource type="PackedScene" uid="uid://b7ff2vbbmkqcx" path="res://assets/models/tracks/track_curve_right_borders.glb" id="7_ayq4t"]
+[ext_resource type="PackedScene" uid="uid://cbpn47sbi114n" path="res://assets/models/tracks/track_join_borders_low.glb" id="7_yixft"]
 [ext_resource type="PackedScene" uid="uid://d1ahccigu66my" path="res://assets/models/tracks/track_curve_left_borders_low.glb" id="8_qjpm0"]
 [ext_resource type="PackedScene" uid="uid://bxru6d7qspr8e" path="res://assets/models/tracks/track_curve_right_borders_low.glb" id="9_7ruu6"]
 [ext_resource type="PackedScene" uid="uid://beucc0vb5wefc" path="res://assets/models/tracks/track_straight_borders_low.glb" id="10_yixft"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_6kggx"]
-size = Vector2(300, 300)
+size = Vector2(400, 400)
 orientation = 1
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6kggx"]
-size = Vector3(300, 1, 300)
+size = Vector3(400, 1, 400)
 
 [node name="Track1" type="Node3D" unique_id=114421550]
 script = ExtResource("2_ak41n")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=422301176]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41.569218, 0.11093736, 24)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.856406, 0.11093736, 24)
 collision_layer = 8
 collision_mask = 0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=1849464095]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.928203, 1.1444092e-05, -36)
 mesh = SubResource("QuadMesh_6kggx")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1276642076]
@@ -36,76 +35,160 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 shape = SubResource("BoxShape3D_6kggx")
 
 [node name="TrackPieces1" type="Node3D" parent="." unique_id=1947006259]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.712812, 0, 48)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.712812, -0.04, 48)
+
+[node name="track_straight" parent="TrackPieces1" unique_id=773804908 instance=ExtResource("2_87d7m")]
+transform = Transform3D(-0.8660254, 0, -0.50000006, 0, 1, 0, 0.50000006, 0, -0.8660254, -13.856406, 0, 0)
+
+[node name="track_straight_borders_low" parent="TrackPieces1" unique_id=20085254 instance=ExtResource("10_yixft")]
+transform = Transform3D(-0.86602545, 0, -0.4999999, 0, 1, 0, 0.4999999, 0, -0.86602545, -6.9282036, 0, 12)
+
+[node name="track_straight_borders_low2" parent="TrackPieces1" unique_id=358681902 instance=ExtResource("10_yixft")]
+transform = Transform3D(-0.8660253, 0, 0.5000001, 0, 1, 0, -0.5000001, 0, -0.8660253, -6.9282036, 0, 36)
+
+[node name="track_straight_borders_low8" parent="TrackPieces1" unique_id=1076712129 instance=ExtResource("10_yixft")]
+transform = Transform3D(-5.9604645e-08, 0, -1, 0, 1, 0, 1, 0, -5.9604645e-08, 41.569214, 0, 48)
+
+[node name="track_straight_borders_low9" parent="TrackPieces1" unique_id=1466462007 instance=ExtResource("10_yixft")]
+transform = Transform3D(-5.9604645e-08, 0, -1, 0, 1, 0, 1, 0, -5.9604645e-08, 55.425625, 0, 48)
+
+[node name="track_straight_borders_low19" parent="TrackPieces1" unique_id=845307771 instance=ExtResource("10_yixft")]
+transform = Transform3D(1.4702742e-07, 0, 1, 0, 1, 0, -1, 0, 1.4702742e-07, 96.99484, 0, 24)
+
+[node name="track_straight_borders_low20" parent="TrackPieces1" unique_id=1821349701 instance=ExtResource("10_yixft")]
+transform = Transform3D(1.4702742e-07, 0, 1, 0, 1, 0, -1, 0, 1.4702742e-07, 83.138435, 0, 24)
+
+[node name="track_straight_borders_low21" parent="TrackPieces1" unique_id=208780900 instance=ExtResource("10_yixft")]
+transform = Transform3D(1.4702742e-07, 0, 1, 0, 1, 0, -1, 0, 1.4702742e-07, 69.282036, 0, 24)
+
+[node name="track_straight_borders_low22" parent="TrackPieces1" unique_id=836617755 instance=ExtResource("10_yixft")]
+transform = Transform3D(1.4702742e-07, 0, 1, 0, 1, 0, -1, 0, 1.4702742e-07, 55.425625, 0, 24)
+
+[node name="track_straight_borders_low24" parent="TrackPieces1" unique_id=496594353 instance=ExtResource("10_yixft")]
+transform = Transform3D(0.8660255, 0, 0.49999985, 0, 1, 0, -0.49999985, 0, 0.8660255, 20.784609, 0, 12)
+
+[node name="track_straight_borders_low25" parent="TrackPieces1" unique_id=1770762960 instance=ExtResource("10_yixft")]
+transform = Transform3D(0.8660255, 0, 0.49999985, 0, 1, 0, -0.49999985, 0, 0.8660255, 13.856406, 0, 0)
+
+[node name="track_straight_borders_low26" parent="TrackPieces1" unique_id=240350240 instance=ExtResource("10_yixft")]
+transform = Transform3D(0.8660255, 0, 0.49999985, 0, 1, 0, -0.49999985, 0, 0.8660255, 6.928203, 0, -12)
+
+[node name="track_straight_borders_low23" parent="TrackPieces1" unique_id=566886506 instance=ExtResource("10_yixft")]
+transform = Transform3D(1.4702742e-07, 0, 1, 0, 1, 0, -1, 0, 1.4702742e-07, 41.569218, 0, 24)
+
+[node name="track_straight_borders_low11" parent="TrackPieces1" unique_id=495951817 instance=ExtResource("10_yixft")]
+transform = Transform3D(-0.86602545, 0, -0.4999999, 0, 1, 0, 0.4999999, 0, -0.86602545, 76.210236, 0, 60)
+
+[node name="track_straight_borders_low12" parent="TrackPieces1" unique_id=360468959 instance=ExtResource("10_yixft")]
+transform = Transform3D(-0.86602545, 0, -0.4999999, 0, 1, 0, 0.4999999, 0, -0.86602545, 62.35383, 0, 84)
+
+[node name="track_straight_borders_low10" parent="TrackPieces1" unique_id=1638948434 instance=ExtResource("10_yixft")]
+transform = Transform3D(-5.9604645e-08, 0, -1, 0, 1, 0, 1, 0, -5.9604645e-08, 41.569218, 0, 72)
+
+[node name="track_straight_borders_low13" parent="TrackPieces1" unique_id=1251512825 instance=ExtResource("10_yixft")]
+transform = Transform3D(-5.9604645e-08, 0, -1, 0, 1, 0, 1, 0, -5.9604645e-08, 83.138435, 0, 96)
+
+[node name="track_straight_borders_low14" parent="TrackPieces1" unique_id=215681500 instance=ExtResource("10_yixft")]
+transform = Transform3D(-5.9604645e-08, 0, -1, 0, 1, 0, 1, 0, -5.9604645e-08, 96.99484, 0, 72)
+
+[node name="track_straight_borders_low16" parent="TrackPieces1" unique_id=905381334 instance=ExtResource("10_yixft")]
+transform = Transform3D(0.86602545, 0, 0.5, 0, 1, 0, -0.5, 0, 0.86602545, 131.63586, 0, 60)
+
+[node name="track_straight_borders_low17" parent="TrackPieces1" unique_id=1854347703 instance=ExtResource("10_yixft")]
+transform = Transform3D(0.86602545, 0, 0.5, 0, 1, 0, -0.5, 0, 0.86602545, 124.70766, 0, 48)
+
+[node name="track_straight_borders_low18" parent="TrackPieces1" unique_id=777862215 instance=ExtResource("10_yixft")]
+transform = Transform3D(0.86602545, 0, 0.5, 0, 1, 0, -0.5, 0, 0.86602545, 117.77946, 0, 36)
+
+[node name="track_straight_borders_low15" parent="TrackPieces1" unique_id=2039061866 instance=ExtResource("10_yixft")]
+transform = Transform3D(-5.9604645e-08, 0, -1, 0, 1, 0, 1, 0, -5.9604645e-08, 96.99484, 0, 96)
+
+[node name="track_straight_borders_low3" parent="TrackPieces1" unique_id=1346949309 instance=ExtResource("10_yixft")]
+transform = Transform3D(-0.8660253, 0, 0.5000001, 0, 1, 0, -0.5000001, 0, -0.8660253, -13.856406, 0, 48)
+
+[node name="track_straight_borders_low4" parent="TrackPieces1" unique_id=1298317335 instance=ExtResource("10_yixft")]
+transform = Transform3D(-0.8660253, 0, 0.5000001, 0, 1, 0, -0.5000001, 0, -0.8660253, -20.784609, 0, 60)
+
+[node name="track_straight_borders_low6" parent="TrackPieces1" unique_id=840890335 instance=ExtResource("10_yixft")]
+transform = Transform3D(0.8660254, 0, -0.50000006, 0, 1, 0, 0.50000006, 0, 0.8660254, -6.9282036, 0, 84)
+
+[node name="track_straight_borders_low7" parent="TrackPieces1" unique_id=2073003597 instance=ExtResource("10_yixft")]
+transform = Transform3D(0.8660254, 0, -0.50000006, 0, 1, 0, 0.50000006, 0, 0.8660254, 0, 0, 72)
+
+[node name="track_straight_borders_low5" parent="TrackPieces1" unique_id=1821260030 instance=ExtResource("10_yixft")]
+transform = Transform3D(-0.8660253, 0, 0.5000001, 0, 1, 0, -0.5000001, 0, -0.8660253, -27.712812, 0, 72)
+
+[node name="track_curve_left_borders_low" parent="TrackPieces1" unique_id=526316616 instance=ExtResource("8_qjpm0")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -34.641018, 0, 84)
+
+[node name="track_curve_left_borders_low2" parent="TrackPieces1" unique_id=1368212546 instance=ExtResource("8_qjpm0")]
+transform = Transform3D(0.86602545, 0, -0.5, 0, 1, 0, 0.5, 0, 0.86602545, -27.712812, 0, 96)
+
+[node name="track_curve_left_borders_low4" parent="TrackPieces1" unique_id=79629111 instance=ExtResource("8_qjpm0")]
+transform = Transform3D(0.86602545, 0, -0.5, 0, 1, 0, 0.5, 0, 0.86602545, 27.712812, 0, 72)
+
+[node name="track_curve_left_borders_low7" parent="TrackPieces1" unique_id=122003280 instance=ExtResource("8_qjpm0")]
+transform = Transform3D(0.86602545, 0, 0.50000006, 0, 1, 0, -0.50000006, 0, 0.86602545, 110.85124, 0, 96)
+
+[node name="track_curve_left_borders_low8" parent="TrackPieces1" unique_id=569792188 instance=ExtResource("8_qjpm0")]
+transform = Transform3D(0.86602545, 0, 0.50000006, 0, 1, 0, -0.50000006, 0, 0.86602545, 131.63586, 0, 84)
+
+[node name="track_curve_left_borders_low9" parent="TrackPieces1" unique_id=142936523 instance=ExtResource("8_qjpm0")]
+transform = Transform3D(-8.940697e-08, 0, 1, 0, 1, 0, -1, 0, -8.940697e-08, 138.56407, 0, 72)
+
+[node name="track_curve_left_borders_low10" parent="TrackPieces1" unique_id=1788081797 instance=ExtResource("8_qjpm0")]
+transform = Transform3D(-0.8660255, 0, 0.49999988, 0, 1, 0, -0.49999988, 0, -0.8660255, 110.85124, 0, 24)
+
+[node name="track_curve_left_borders_low11" parent="TrackPieces1" unique_id=488951430 instance=ExtResource("8_qjpm0")]
+transform = Transform3D(-0.8660255, 0, 0.49999988, 0, 1, 0, -0.49999988, 0, -0.8660255, 0, 0, -24)
+
+[node name="track_curve_left_borders_low12" parent="TrackPieces1" unique_id=551317315 instance=ExtResource("8_qjpm0")]
+transform = Transform3D(-0.8660253, 0, -0.5000002, 0, 1, 0, 0.5000002, 0, -0.8660253, -13.856406, 0, -24)
+
+[node name="track_curve_left_borders_low13" parent="TrackPieces1" unique_id=216463011 instance=ExtResource("8_qjpm0")]
+transform = Transform3D(2.3841858e-07, 0, -1, 0, 1, 0, 1, 0, 2.3841858e-07, -20.784609, 0, -12)
+
+[node name="track_curve_left_borders_low5" parent="TrackPieces1" unique_id=1386873516 instance=ExtResource("8_qjpm0")]
+transform = Transform3D(0.86602545, 0, -0.5, 0, 1, 0, 0.5, 0, 0.86602545, 69.282036, 0, 96)
+
+[node name="track_curve_left_borders_low6" parent="TrackPieces1" unique_id=184346600 instance=ExtResource("8_qjpm0")]
+transform = Transform3D(0.86602545, 0, -0.5, 0, 1, 0, 0.5, 0, 0.86602545, 83.138435, 0, 72)
+
+[node name="track_curve_left_borders_low3" parent="TrackPieces1" unique_id=1306723156 instance=ExtResource("8_qjpm0")]
+transform = Transform3D(0.86602545, 0, 0.50000006, 0, 1, 0, -0.50000006, 0, 0.86602545, -13.856406, 0, 96)
+
+[node name="track_curve_right_borders_low" parent="TrackPieces1" unique_id=702871390 instance=ExtResource("9_7ruu6")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 24)
+
+[node name="track_curve_right_borders_low2" parent="TrackPieces1" unique_id=1294283430 instance=ExtResource("9_7ruu6")]
+transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, 6.9282017, 0, 60)
+
+[node name="track_curve_right_borders_low3" parent="TrackPieces1" unique_id=2057810037 instance=ExtResource("9_7ruu6")]
+transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, 27.712812, 0, 48)
+
+[node name="track_curve_right_borders_low7" parent="TrackPieces1" unique_id=981324555 instance=ExtResource("9_7ruu6")]
+transform = Transform3D(-0.86602545, 0, 0.49999997, 0, 1, 0, -0.49999997, 0, -0.86602545, 27.712812, 0, 24)
+
+[node name="track_curve_right_borders_low4" parent="TrackPieces1" unique_id=841454360 instance=ExtResource("9_7ruu6")]
+transform = Transform3D(0.8660255, 0, -0.5, 0, 1, 0, 0.5, 0, 0.8660255, 55.42562, 0, 72)
+
+[node name="track_curve_right_borders_low5" parent="TrackPieces1" unique_id=952632211 instance=ExtResource("9_7ruu6")]
+transform = Transform3D(0.8660255, 0, -0.5, 0, 1, 0, 0.5, 0, 0.8660255, 69.282036, 0, 48)
+
+[node name="track_curve_right_borders_low6" parent="TrackPieces1" unique_id=1098433179 instance=ExtResource("9_7ruu6")]
+transform = Transform3D(0.8660255, 0, -0.5, 0, 1, 0, 0.5, 0, 0.8660255, 110.85125, 0, 72)
+
+[node name="track_split_borders_low" parent="TrackPieces1" unique_id=2051082026 instance=ExtResource("6_7ruu6")]
+transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, 20.784609, 0, 60)
+
+[node name="track_join_borders_low" parent="TrackPieces1" unique_id=767029863 instance=ExtResource("7_yixft")]
+transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, 117.77945, 0, 84)
 
 [node name="StartFinishLine" parent="TrackPieces1" unique_id=100495756 instance=ExtResource("2_7ruu6")]
 transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, -6.9282036, 0, 12)
 
-[node name="track_straight" parent="TrackPieces1" unique_id=1052016034 instance=ExtResource("2_87d7m")]
-transform = Transform3D(0.8660253, 0, 0.49999997, 0, 1, 0, -0.49999997, 0, 0.8660253, -6.928203, 0, 12)
-
-[node name="track_straight7" parent="TrackPieces1" unique_id=1718148446 instance=ExtResource("2_87d7m")]
-transform = Transform3D(0, 0, -0.9999999, 0, 1, 0, 0.9999999, 0, 0, -13.856406, 0, -24)
-
-[node name="track_straight8" parent="TrackPieces1" unique_id=219963244 instance=ExtResource("2_87d7m")]
-transform = Transform3D(0, 0, -0.9999999, 0, 1, 0, 0.9999999, 0, 0, -27.712812, 0, -24)
-
-[node name="track_straight9" parent="TrackPieces1" unique_id=3473722 instance=ExtResource("2_87d7m")]
-transform = Transform3D(8.742277e-08, 0, 0.9999999, 0, 1, 0, -0.9999999, 0, 8.742277e-08, -27.712812, 0, 0)
-
-[node name="track_straight2" parent="TrackPieces1" unique_id=517499812 instance=ExtResource("2_87d7m")]
-transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, 0, 0, 24)
-
-[node name="track_straight3" parent="TrackPieces1" unique_id=765277454 instance=ExtResource("2_87d7m")]
-transform = Transform3D(-0.86602527, 0, 0.50000006, 0, 1, 0, -0.50000006, 0, -0.86602527, 34.641018, 0, 36)
-
-[node name="track_straight4" parent="TrackPieces1" unique_id=1083663498 instance=ExtResource("2_87d7m")]
-transform = Transform3D(-0.8660253, 0, 0.50000006, 0, 1, 0, -0.50000006, 0, -0.8660253, 27.712812, 0, 48)
-
-[node name="track_curve_left" parent="TrackPieces1" unique_id=1687541352 instance=ExtResource("3_87d7m")]
-transform = Transform3D(1.1920929e-07, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, 1.1920929e-07, 6.928203, 0, 36)
-
-[node name="track_curve_left3" parent="TrackPieces1" unique_id=1691534578 instance=ExtResource("3_87d7m")]
-transform = Transform3D(-0.86602527, 0, 0.5, 0, 1, 0, -0.5, 0, -0.86602527, -13.856406, 0, 0)
-
-[node name="track_curve_left2" parent="TrackPieces1" unique_id=815323178 instance=ExtResource("3_87d7m")]
-transform = Transform3D(0.8660252, 0, -0.50000006, 0, 1, 0, 0.50000006, 0, 0.8660252, 20.784609, 0, 12)
-
-[node name="track_curve_right" parent="TrackPieces1" unique_id=885058254 instance=ExtResource("4_tsy2k")]
-transform = Transform3D(-5.9604645e-08, 0, 1, 0, 1, 0, -1, 0, -5.9604645e-08, 0, 0, 48)
-
-[node name="track_curve_right2" parent="TrackPieces1" unique_id=412353680 instance=ExtResource("4_tsy2k")]
-transform = Transform3D(-0.86602545, 0, 0.4999999, 0, 1, 0, -0.4999999, 0, -0.86602545, 6.928203, 0, 60)
-
-[node name="track_curve_right3" parent="TrackPieces1" unique_id=146689184 instance=ExtResource("4_tsy2k")]
-transform = Transform3D(-0.8660253, 0, -0.5000001, 0, 1, 0, 0.5000001, 0, -0.8660253, 20.784609, 0, 60)
-
-[node name="track_curve_right7" parent="TrackPieces1" unique_id=1245506143 instance=ExtResource("4_tsy2k")]
-transform = Transform3D(0.86602545, 0, 0.5, 0, 1, 0, -0.5, 0, 0.86602545, -41.569218, 0, -24)
-
-[node name="track_curve_right8" parent="TrackPieces1" unique_id=14765128 instance=ExtResource("4_tsy2k")]
-transform = Transform3D(-5.9604645e-08, 0, 1, 0, 1, 0, -1, 0, -5.9604645e-08, -48.49742, 0, -12)
-
-[node name="track_curve_right9" parent="TrackPieces1" unique_id=1658975550 instance=ExtResource("4_tsy2k")]
-transform = Transform3D(-0.86602545, 0, 0.49999997, 0, 1, 0, -0.49999997, 0, -0.86602545, -41.569218, 0, 0)
-
-[node name="track_curve_right4" parent="TrackPieces1" unique_id=1369482463 instance=ExtResource("4_tsy2k")]
-transform = Transform3D(1.3411045e-07, 0, -0.99999994, 0, 1, 0, 0.99999994, 0, 1.3411045e-07, 41.569218, 0, 24)
-
-[node name="track_curve_right5" parent="TrackPieces1" unique_id=1815041074 instance=ExtResource("4_tsy2k")]
-transform = Transform3D(0.8660254, 0, -0.4999998, 0, 1, 0, 0.4999998, 0, 0.8660254, 34.641018, 0, 12)
-
-[node name="track_curve_right6" parent="TrackPieces1" unique_id=579813977 instance=ExtResource("4_tsy2k")]
-transform = Transform3D(0.8660254, 0, -0.4999998, 0, 1, 0, 0.4999998, 0, 0.8660254, 0, 0, -24)
-
-[node name="track_straight_borders" parent="TrackPieces1" unique_id=1296128046 instance=ExtResource("5_v543v")]
-transform = Transform3D(-0.86602545, 0, -0.4999999, 0, 1, 0, 0.4999999, 0, -0.86602545, 13.856406, 0, 0)
-
-[node name="track_straight_borders2" parent="TrackPieces1" unique_id=1299117509 instance=ExtResource("5_v543v")]
-transform = Transform3D(-0.86602545, 0, -0.4999999, 0, 1, 0, 0.4999999, 0, -0.86602545, 6.928203, 0, -12)
-
 [node name="TrackPieces2" type="Node3D" parent="." unique_id=1180265468]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.928203, 0, 12)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.928, -0.04, 12)
 
 [node name="StartFinishLine2" parent="TrackPieces2" unique_id=1160236571 instance=ExtResource("2_7ruu6")]
 transform = Transform3D(0.86602545, 0, 0.5, 0, 1, 0, -0.5, 0, 0.86602545, -41.569218, 7.6293945e-06, 48)
@@ -197,11 +280,11 @@ transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -124.70766, 7.6293945e-06, 2
 [node name="track_straight_borders3" parent="TrackPieces2" unique_id=360787008 instance=ExtResource("5_v543v")]
 transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, -34.641018, 0, 60)
 
-[node name="track_straight5" parent="TrackPieces2" unique_id=773804908 instance=ExtResource("2_87d7m")]
+[node name="track_straight5" parent="TrackPieces2" unique_id=569770175 instance=ExtResource("2_87d7m")]
 transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, -41.569218, 0, 48)
 
 [node name="TrackPieces3" type="Node3D" parent="." unique_id=989327178]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.928203, 0, 12)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.928203, -0.04, 12)
 
 [node name="StartFinishLine3" parent="TrackPieces3" unique_id=972997970 instance=ExtResource("2_7ruu6")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -34.641018, 7.6293945e-06, -12)
