@@ -17,11 +17,6 @@ environment = SubResource("Environment_6kggx")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1650940499]
 transform = Transform3D(0.69909847, -0.60673296, 0.37833378, 0, 0.5291194, 0.8485474, -0.7150254, -0.5932182, 0.3699065, 0, 7.498417, 0)
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=625482712 node_paths=PackedStringArray("look_at_node")]
-transform = Transform3D(1, 0, 0, 0, 0.90630776, 0.42261827, 0, -0.42261827, 0.90630776, 53.044357, 1.9690456, 29.571598)
-script = ExtResource("3_feb5d")
-look_at_node = NodePath("../Car3/CameraLookAt")
-
 [node name="Car" parent="." unique_id=305355653 instance=ExtResource("2_feb5d")]
 process_mode = 4
 transform = Transform3D(0.8607708, 0, 0.50899273, 0, 1, 0, -0.50899273, 0, 0.8607708, 57.316803, 0.26447225, 26.502163)
@@ -42,6 +37,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53.24662, 0.1988731, 25.62320
 
 [node name="CameraLookAt" type="Node3D" parent="Car3" unique_id=1862109960]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+
+[node name="CameraFollow" type="Node3D" parent="." unique_id=217824483 node_paths=PackedStringArray("look_at_node")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+script = ExtResource("3_feb5d")
+look_at_node = NodePath("../Car3/CameraLookAt")
+
+[node name="Camera3D" type="Camera3D" parent="CameraFollow" unique_id=625482712]
 
 [connection signal="current_car_gear" from="Car" to="DrivingUI" method="_on_car_current_car_gear"]
 [connection signal="current_car_speed" from="Car" to="DrivingUI" method="_on_car_current_car_speed"]
