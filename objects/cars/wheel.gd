@@ -13,7 +13,6 @@ extends RayCast3D
 @export var over_extend: float = 0.2
 
 @export_group("Tire")
-@export var grip_curve: Curve
 @export var static_firction: float = 5
 @export var dynamic_friction: float = 3
 

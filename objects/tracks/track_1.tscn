@@ -201,7 +201,7 @@ transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, -34.6410
 transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, -41.569218, 0, 48)
 
 [node name="TrackPieces3" type="Node3D" parent="." unique_id=989327178]
-transform = Transform3D(1.5, 0, 0, 0, 1, 0, 0, 0, 1.5, 6.928203, 0, 12)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.928203, 0, 12)
 
 [node name="StartFinishLine3" parent="TrackPieces3" unique_id=972997970 instance=ExtResource("2_7ruu6")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -34.641018, 7.6293945e-06, -12)

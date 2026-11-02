@@ -60,6 +60,7 @@ mesh = ExtResource("2_5daa5")
 
 [node name="WheelFL" type="RayCast3D" parent="." unique_id=501833128]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 0.68, -1.09)
+enabled = false
 collision_mask = 8
 script = ExtResource("4_fxc1d")
 grip_curve = SubResource("Curve_h4id6")
@@ -70,6 +71,7 @@ mesh = ExtResource("3_h4id6")
 
 [node name="WheelFR" type="RayCast3D" parent="." unique_id=1485052264]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 0.68, -1.09)
+enabled = false
 collision_mask = 8
 script = ExtResource("4_fxc1d")
 grip_curve = SubResource("Curve_h4id6")
@@ -80,6 +82,7 @@ mesh = ExtResource("3_h4id6")
 
 [node name="WheelRL" type="RayCast3D" parent="." unique_id=1214870063]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 0.68, 1.13)
+enabled = false
 collision_mask = 8
 script = ExtResource("4_fxc1d")
 accelerates = true
@@ -91,6 +94,7 @@ mesh = ExtResource("3_h4id6")
 
 [node name="WheelRR" type="RayCast3D" parent="." unique_id=1461451804]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 0.68, 1.13)
+enabled = false
 collision_mask = 8
 script = ExtResource("4_fxc1d")
 accelerates = true
