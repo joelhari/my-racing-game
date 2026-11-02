@@ -39,3 +39,13 @@ text = "Gear"
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "0"
+
+[node name="LabelFPS" type="Label" parent="GridContainer" unique_id=200742892]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "FPS"
+
+[node name="ValueFPS" type="Label" parent="GridContainer" unique_id=1786136581]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "0"

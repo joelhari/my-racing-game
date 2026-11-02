@@ -3,6 +3,7 @@ extends Control
 
 @onready var value_speed: Label = $GridContainer/ValueSpeed
 @onready var value_gear: Label = $GridContainer/ValueGear
+@onready var value_fps: Label = $GridContainer/ValueFPS
 
 
 var gear_text_map: Dictionary[int, String] = {
@@ -14,6 +15,10 @@ var gear_text_map: Dictionary[int, String] = {
     4: '4',
     5: '5',
 }
+
+
+func _process(_delta: float) -> void:
+    value_fps.text = "%0.0f" % Engine.get_frames_per_second()
 
 
 func _on_car_current_car_speed(velocity: int) -> void:
