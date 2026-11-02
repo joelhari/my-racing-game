@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://btp6wjgnb15e0"]
+
+[ext_resource type="Script" uid="uid://clpwcpo7i0l3o" path="res://objects/roads/road.gd" id="1_5yh4l"]
+[ext_resource type="PackedScene" uid="uid://d1ahccigu66my" path="res://assets/models/tracks/track_curve_left_borders_low.glb" id="1_yy06h"]
+
+[node name="RoadCurveLeft" type="Node3D" unique_id=1654663290]
+script = ExtResource("1_5yh4l")
+road_name = "Left Curve"
+road_angle = 60
+
+[node name="track_curve_left_borders_low" parent="." unique_id=1276164829 instance=ExtResource("1_yy06h")]
+transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, 0, 0, 0)

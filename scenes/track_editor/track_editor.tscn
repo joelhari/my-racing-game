@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://b3td1630p1env"]
+
+[ext_resource type="Script" uid="uid://dfh1jmt7fpyc3" path="res://scenes/track_editor/track_editor.gd" id="1_ciioy"]
+[ext_resource type="PackedScene" uid="uid://h8om2uebr1i5" path="res://scenes/track_editor/track_editor_ui.tscn" id="2_36dau"]
+
+[sub_resource type="Environment" id="Environment_ciioy"]
+background_color = Color(1, 1, 1, 1)
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+
+[node name="TrackEditor" type="Node3D" unique_id=1246189780]
+script = ExtResource("1_ciioy")
+
+[node name="TrackEditorUI" parent="." unique_id=956280158 instance=ExtResource("2_36dau")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1787784667]
+environment = SubResource("Environment_ciioy")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=470871753]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 4, 0)
+projection = 1
+size = 100.0
+
+[node name="Track" type="Node3D" parent="." unique_id=1167362517]
+
+[connection signal="select_road" from="TrackEditorUI" to="." method="on_select_road"]

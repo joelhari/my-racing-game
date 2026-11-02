@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://bx5ti6rwkjlh1"]
+
+[ext_resource type="Script" uid="uid://clpwcpo7i0l3o" path="res://objects/roads/road.gd" id="1_effer"]
+[ext_resource type="PackedScene" uid="uid://beucc0vb5wefc" path="res://assets/models/tracks/track_straight_borders_low.glb" id="2_ckmy7"]
+
+[node name="RoadStraight" type="Node3D" unique_id=1651386092]
+script = ExtResource("1_effer")
+road_name = "Straight"
+
+[node name="track_straight_borders_low" parent="." unique_id=20085254 instance=ExtResource("2_ckmy7")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
