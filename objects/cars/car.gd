@@ -3,8 +3,9 @@ extends RigidBody3D
 
 
 @export var wheels: Array[Wheel]
-@export var skid_marks: Array[GPUParticles3D]
 var steering_wheels: Array[Wheel]
+@export var skid_marks: Array[GPUParticles3D]
+@export var model_scale: float = 1.0
 
 @export_group("Engine")
 @export var acceleration: float = 4000.0
@@ -59,7 +60,7 @@ func _physics_process(delta: float) -> void:
     if break_input > 0 and not is_zero_approx(velocity):
         break_strength = sign(velocity) * break_input * breaking
     
-    current_car_speed.emit(int(velocity * 3.6))
+    current_car_speed.emit(int(velocity * 3.6 * model_scale))
     
     var grounded: bool = false
     

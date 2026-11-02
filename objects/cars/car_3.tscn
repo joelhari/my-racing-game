@@ -44,6 +44,7 @@ mass = 750.0
 script = ExtResource("1_2rjty")
 wheels = [NodePath("WheelFL"), NodePath("WheelFR"), NodePath("WheelRL"), NodePath("WheelRR")]
 skid_marks = [NodePath("SkidMarks/GPUParticles3D"), NodePath("SkidMarks/GPUParticles3D2"), NodePath("SkidMarks/GPUParticles3D3"), NodePath("SkidMarks/GPUParticles3D4")]
+model_scale = 0.588
 acceleration_curve = SubResource("Curve_6kggx")
 wheel_turn_angle_curve = SubResource("Curve_cwtv4")
 

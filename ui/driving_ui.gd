@@ -24,7 +24,7 @@ func _process(_delta: float) -> void:
 func _on_car_current_car_speed(velocity: int) -> void:
     if not is_node_ready():
         return
-    value_speed.text = str(velocity)
+    value_speed.text = "%d km/h" % velocity
 
 
 func _on_car_current_car_gear(gear: int) -> void:
