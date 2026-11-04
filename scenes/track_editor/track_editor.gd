@@ -42,11 +42,17 @@ func on_select_road(idx: int) -> void:
     _place_road_at_cursor(idx)
 
 
+func connect_signals(ui_scene: Control) -> void:
+    assert(ui_scene != null)
+    if ui_scene.has_signal("select_road"):
+        ui_scene.select_road.connect(on_select_road)
+
+
 func _ready() -> void:
     for road_scene in road_scenes:
         assert(road_scene.can_instantiate())
     
-    storage_service = StorageService.new()        
+    storage_service = StorageService.new()
     _place_start_finish_line_at_cursor()
     _place_road_at_cursor(0)
 
@@ -112,9 +118,6 @@ func _place_road_at_cursor(road_idx: int) -> void:
     if location_blocked:
         return
     var road: Road = road_scenes.get(road_idx).instantiate()
-    
-    print(road_scenes.get(road_idx).resource_path)
-    print(road.scene_file_path)
     
     track.add_child(road)
     road.global_position = TrackEditorUtils.hex_coords_to_world_coords(cursor_coordinates)

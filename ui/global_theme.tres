@@ -1,0 +1,6 @@
+[gd_resource type="Theme" format=3 uid="uid://bardapdjj8yyy"]
+
+[resource]
+default_base_scale = 2.0
+default_font_size = 36
+BoxContainer/constants/separation = 8

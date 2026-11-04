@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://beg3ul85n47tl"]
+
+[ext_resource type="Script" uid="uid://6e8o25lkxflq" path="res://game_controller.gd" id="1_3iy47"]
+[ext_resource type="PackedScene" uid="uid://c57vu5s1u5v7t" path="res://ui/main_menu.tscn" id="2_soqow"]
+
+[node name="GameController" type="Node" unique_id=1589369774 node_paths=PackedStringArray("node_3d", "node_ui")]
+script = ExtResource("1_3iy47")
+node_3d = NodePath("Node3D")
+node_ui = NodePath("UI")
+
+[node name="Node3D" type="Node3D" parent="." unique_id=584863019]
+
+[node name="UI" type="Control" parent="." unique_id=1299682442]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainMenu" parent="UI" unique_id=524436045 instance=ExtResource("2_soqow")]
+layout_mode = 1

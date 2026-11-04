@@ -93,7 +93,6 @@ func load_track(track_node: Node3D) -> Array:
 
 func _load_start_finish_line(track_node: Node3D, json: JSON) -> Node3D:
     var save_data: Dictionary = json.data
-    print(save_data)
     
     var start_finish_line: Node3D = load(save_data.get("scene_file_path")).instantiate()
     track_node.add_child(start_finish_line)

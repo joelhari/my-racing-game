@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://c57vu5s1u5v7t"]
+
+[ext_resource type="Script" uid="uid://bk727ds4mak8l" path="res://ui/main_menu.gd" id="1_t7e0r"]
+
+[node name="MainMenu" type="Control" unique_id=524436045]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_t7e0r")
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=661487936]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=1603877368]
+layout_mode = 2
+
+[node name="LabelMainMenu" type="Label" parent="CenterContainer/VBoxContainer" unique_id=541345507]
+layout_mode = 2
+text = "Main Menu"
+
+[node name="ButtonPlay" type="Button" parent="CenterContainer/VBoxContainer" unique_id=22973389]
+layout_mode = 2
+text = "Play"
+
+[node name="ButtonEditor" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1522058499]
+layout_mode = 2
+text = "Editor"
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/ButtonPlay" to="." method="_on_button_play_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/ButtonEditor" to="." method="_on_button_editor_pressed"]
