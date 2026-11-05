@@ -14,14 +14,11 @@ extends RayCast3D
 @export var over_extend: float = 0.2
 
 @export_group("Tire")
-@export var static_firction: float = 5
-@export var dynamic_friction: float = 3
-
+@export var slip_factor: float = 0.3
 
 @onready var mesh: Node3D = get_child(0)
 
 var rpm: float = 0.0
-
 var wheel_lateral: float = 0.0
 
 
@@ -33,13 +30,10 @@ func apply_wheel_physics_to_car(
     car: Car,
     accelerate_strength: float,
     break_strength: float,
-    _skid_mark: GPUParticles3D,
     delta: float
 ) -> void:
-
     if not is_colliding():
         return
-
 
     # update the raycast target position
     target_position.y = -(rest_dist + wheel_radius + over_extend)
@@ -80,68 +74,34 @@ func apply_wheel_physics_to_car(
     force_vector += normal_force
     #force_vector += (spring_force - spring_damping_force) * contact_normal
     # ------------------------------------------------------------------------ #
-
-    
     
     # --------- Acceleration ------------------------------------------------- #
     # TODO: With -wheel.global_basis.z, if the car is tilted upwards, the
     #       acceleratio force is tilted upwards too. Probably should go
     #       along the road surface?
-    #var forward_direction: Vector3 = -global_basis.z
-    
-    #var wheel_forward_velocity: float = contact_forward.dot(car.linear_velocity)
-    
     # TODO: improve wheels rotation (e.g., rotation when in the air)
     rpm = 60.0 * wheel_forward_velocity / (2.0 * wheel_radius * PI)
     mesh.rotate_x(-wheel_forward_velocity * delta / wheel_radius)
-    
-    #if (not (wheel.is_accelerating and accelerate_input > 0) and
-        #not (wheel.is_breaking and break_input > 0)):
-            #return
-    
+
     if is_accelerating and not is_zero_approx(accelerate_strength):
         force_vector += contact_forward * accelerate_strength
+    # ------------------------------------------------------------------------ #
     
+    # --------- Breaking ----------------------------------------------------- #
     if is_breaking and not is_zero_approx(break_strength):
         force_vector -= contact_forward * break_strength
     # ------------------------------------------------------------------------ #
     
-
-    
-    
-    # --------- Lateral ------------------------------------------------- #
-    #var gravity: float = car.get_gravity().y
-    #var required_lateral_force: Vector3 = (
-        #contact_lateral * wheel_lateral_velocity * ((car.mass*gravity)/4.0))
-    #
-    #var lateral_force: Vector3 = Vector3.ZERO
-    #if required_lateral_force.length_squared() <= (static_firction * normal_force).length_squared():
-        #lateral_force = required_lateral_force
-        #skid_mark.emitting = false
-    #else:
-        #lateral_force = dynamic_friction * normal_force.length() * contact_lateral * -sign(wheel_lateral_velocity)
-        #skid_mark.global_position = contact + Vector3.UP * 0.01
-        #skid_mark.look_at(skid_mark.global_position + skid_mark.global_basis.z)
-        #skid_mark.emitting = true
-
-    # TODO: rename this shit
-    #var forward_traction: float = 0.05
-    #var forward_force: Vector3 = contact_forward * wheel_forward_velocity * forward_traction * ((car.mass*gravity)/4.0)
-
-    var desired_velocity_change = -wheel_lateral_velocity * 0.3
+    # --------- Lateral forces ----------------------------------------------- #
+    var desired_velocity_change = -wheel_lateral_velocity * slip_factor
     var desired_acceleration = desired_velocity_change / delta
     
     wheel_lateral = desired_acceleration * ((car.mass)/4.0)
     var required_lateral_force = contact_lateral * desired_acceleration * ((car.mass)/4.0)
     var lateral_force = required_lateral_force
     
-    force_vector += lateral_force #+ forward_force
+    force_vector += lateral_force
     # ------------------------------------------------------------------------ #
-    
-    
-    
-    #var force_position: Vector3 = contact - global_position
-    #apply_force(force_vector, force_position)
 
     # TODO: Decide wheater to apply the suspension force at the center of
     #       the wheel or on the road contact point.
