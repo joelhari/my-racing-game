@@ -5,6 +5,8 @@
 [ext_resource type="Script" uid="uid://cql3kwd7c1nmj" path="res://scenes/track_editor/road_select.gd" id="2_jjm1s"]
 [ext_resource type="Texture2D" uid="uid://d1sjx8dtr7ct3" path="res://assets/imgs/road_curve_left.png" id="3_7fmwy"]
 [ext_resource type="Texture2D" uid="uid://dog2gauruk4rd" path="res://assets/imgs/road_curve_right.png" id="4_sqcwb"]
+[ext_resource type="Texture2D" uid="uid://cs1baswkd8bna" path="res://assets/imgs/road_curve_right_wide.png" id="6_7fmwy"]
+[ext_resource type="Texture2D" uid="uid://r1i54mwy0s0w" path="res://assets/imgs/road_curve_left_wide.png" id="6_sqcwb"]
 
 [node name="TrackEditorUI" type="Control" unique_id=956280158]
 layout_mode = 3
@@ -56,6 +58,28 @@ expand_icon = true
 script = ExtResource("2_jjm1s")
 road_scene_idx = 2
 
+[node name="RoadSelectCurveLeftWide" type="Button" parent="GridContainer" unique_id=905671068]
+custom_minimum_size = Vector2(250, 250)
+custom_maximum_size = Vector2(250, 250)
+layout_mode = 2
+icon = ExtResource("6_sqcwb")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("2_jjm1s")
+road_scene_idx = 3
+
+[node name="RoadSelectCurveRightWide" type="Button" parent="GridContainer" unique_id=1296142600]
+custom_minimum_size = Vector2(250, 250)
+custom_maximum_size = Vector2(250, 250)
+layout_mode = 2
+icon = ExtResource("6_7fmwy")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("2_jjm1s")
+road_scene_idx = 4
+
 [connection signal="pressed" from="GridContainer/RoadSelectStraight" to="." method="_on_road_select_pressed" flags=18]
 [connection signal="pressed" from="GridContainer/RoadSelectCurveLeft" to="." method="_on_road_select_pressed" flags=18]
 [connection signal="pressed" from="GridContainer/RoadSelectCurveRight" to="." method="_on_road_select_pressed" flags=18]
+[connection signal="pressed" from="GridContainer/RoadSelectCurveLeftWide" to="." method="_on_road_select_pressed" flags=18]
+[connection signal="pressed" from="GridContainer/RoadSelectCurveRightWide" to="." method="_on_road_select_pressed" flags=18]

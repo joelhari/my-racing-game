@@ -26,6 +26,7 @@ var accelerating_wheels: Array[Wheel]
 @export var drag_coefficient: float = 0.3
 @export var air_density: float = 1.293
 @export var cross_section_area: float = 0.825
+#@export var friction_coefficient: float = 0.05
 
 @onready var engine_sound: AudioStreamPlayer3D = $EngineSound
 
@@ -77,6 +78,7 @@ func _physics_process(delta: float) -> void:
     var accelerate_strength: float = _do_acceleration()
     var break_strength: float = _do_breaking(velocity)
     _do_drag(velocity)
+    #_do_friction(velocity)
     
     # TODO: Implement drag and friction
 
@@ -155,6 +157,14 @@ func _do_drag(_velocity: float) -> void:
         drag_coefficient * cross_section_area * air_density *
         linear_velocity.length_squared() / -2.0)
     apply_central_force(linear_velocity.normalized() * drag_force)
+
+
+# TODO: Most friction comes from the wheels where things like road surface,
+#       tire compound, tire presure, temperature, .. play a role in how much
+#       friction is applied.
+#func _do_friction(velocity: float) -> void:
+    #var friction_force: float = velocity * friction_coefficient
+    #apply_central_force(global_basis.z * friction_force)
 
 
 func _do_steering(velocity: float, delta: float) -> void:

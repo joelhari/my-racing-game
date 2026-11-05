@@ -10,6 +10,8 @@ var road_scenes: Array[PackedScene] = [
     preload("res://objects/roads/road_straight.tscn"),
     preload("res://objects/roads/road_curve_left.tscn"),
     preload("res://objects/roads/road_curve_right.tscn"),
+    preload("res://objects/roads/road_curve_left_wide.tscn"),
+    preload("res://objects/roads/road_curve_right_wide.tscn"),
 ]
 var roads_placed: Dictionary[int, Road] = {}
 var roads_placed_stack: Array[int] = []
@@ -29,15 +31,6 @@ var camera_height: float = 4.0
 var camera_target_position: Vector3 = Vector3(0.0, camera_height, 0.0)
 
 var storage_service: StorageService
-
-var rotation_to_next_coords_map: Dictionary[int, Vector2i] = {
-    0: Vector2i(1, 0),
-    60: Vector2i(1, -1),
-    120: Vector2i(0, -1),
-    180: Vector2i(-1, 0),
-    240: Vector2i(-1, 1),
-    300: Vector2i(0, 1)
-}
 
 
 func on_select_road(idx: int) -> void:
@@ -110,8 +103,8 @@ func _load_saved_track() -> void:
         var road: Road = roads_placed.get(location_id)
         _set_cursor_coordinates(hex_coords)
         _set_cursor_rotation(int(round(road.rotation_degrees.y)))
+        _update_cursor_coordinates(road)
         _update_cursor_rotation(road.road_angle)
-        _update_cursor_coordinates()
         _move_camera_to_cursor()
 
 
@@ -128,25 +121,23 @@ func _place_road_at_cursor(road_idx: int) -> void:
     var road: Road = road_scenes.get(road_idx).instantiate()
     
     track.add_child(road)
-    road.global_position = TrackEditorUtils.hex_coords_to_world_coords(cursor_coordinates)
+    var coords: Vector2i = cursor_coordinates + road.road_offset_coords.get(cursor_rotation)
+    road.global_position = TrackEditorUtils.hex_coords_to_world_coords(coords)
     road.global_rotation = Vector3(0.0, deg_to_rad(cursor_rotation), 0.0)
-    _add_road_to_placed_roads(road, cursor_coordinates)
+    _add_road_to_placed_roads(road, coords)
+    _update_cursor_coordinates(road)
     _update_cursor_rotation(road.road_angle)
-    _update_cursor_coordinates()
     _move_camera_to_cursor()
     
 
 func _remove_last_placed_road() -> void:
-    var res = _pop_road_from_placed_roads()
-    if not res:
+    var road: Road = _pop_road_from_placed_roads()
+    if not road:
         print("No road to remove!")
         return
     
-    var road: Road = res.get("road")
-    var hex_coords: Vector2i = res.get("hex_coords")
-    
-    _set_cursor_coordinates(hex_coords)
     _update_cursor_rotation(-road.road_angle)
+    _update_cursor_coordinates(road, false)
     _move_camera_to_cursor()
     
     road.queue_free()
@@ -159,19 +150,29 @@ func _add_road_to_placed_roads(road: Road, hex_coords: Vector2i) -> void:
     roads_placed_stack.push_back(location_id)
 
 
-func _pop_road_from_placed_roads() -> Dictionary:
+func _pop_road_from_placed_roads() -> Road:
     if roads_placed_stack.size() <= 1:
-        return {}
+        return null
 
     var location_id: int = roads_placed_stack.pop_back()
     assert(roads_placed.has(location_id))
-    var hex_coords: Vector2i = TrackEditorUtils.location_id_to_hex_coordinates(location_id)
     var road: Road = roads_placed.get(location_id)
     roads_placed.erase(location_id)
-    return {
-        "road": road,
-        "hex_coords": hex_coords
-    }
+    return road
+
+
+func _update_cursor_coordinates(road: Road, forward: bool = true) -> void:
+    if forward:
+        cursor_coordinates += road.road_next_coords.get(cursor_rotation)
+    else:
+        cursor_coordinates -= road.road_next_coords.get(cursor_rotation)
+    location_blocked = _is_location_blocked(cursor_coordinates)
+
+
+func _set_cursor_coordinates(hex_coords: Vector2i) -> void:
+    cursor_coordinates = hex_coords
+    location_blocked = _is_location_blocked(cursor_coordinates)
+
 
 func _update_cursor_rotation(road_angle: int) -> void:
     _set_cursor_rotation(cursor_rotation + road_angle)
@@ -183,16 +184,6 @@ func _set_cursor_rotation(rotation: int) -> void:
         cursor_rotation += 360
     elif cursor_rotation > 359:
         cursor_rotation -= 360
-
-
-func _update_cursor_coordinates() -> void:
-    cursor_coordinates += rotation_to_next_coords_map.get(int(cursor_rotation))
-    location_blocked = _is_location_blocked(cursor_coordinates)
-
-
-func _set_cursor_coordinates(hex_coords: Vector2i) -> void:
-    cursor_coordinates = hex_coords
-    location_blocked = _is_location_blocked(cursor_coordinates)
 
 
 func _is_location_blocked(hex_coords: Vector2i) -> bool:

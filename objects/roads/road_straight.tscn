@@ -6,6 +6,7 @@
 [node name="RoadStraight" type="Node3D" unique_id=1651386092]
 script = ExtResource("1_effer")
 road_name = "Straight"
+next_road_coords = Vector2i(1, 0)
 
 [node name="track_straight_borders_low" parent="." unique_id=20085254 instance=ExtResource("2_ckmy7")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
