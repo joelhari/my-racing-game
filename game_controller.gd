@@ -28,11 +28,12 @@ func change_3d_scene(
             node_3d.remove_child(current_3d_scene)
     if not new_3d_scene_path:
         current_3d_scene = null
-        node_ui.process_mode = Node.PROCESS_MODE_DISABLED
+        node_3d.process_mode = Node.PROCESS_MODE_DISABLED
         return
     var new_3d_scene = load(new_3d_scene_path).instantiate()
     node_3d.add_child(new_3d_scene)
     current_3d_scene = new_3d_scene
+    node_3d.process_mode = Node.PROCESS_MODE_INHERIT
     _connect_signals()
 
 
@@ -55,6 +56,7 @@ func change_ui_scene(
     var new_ui_scene = load(new_ui_scene_path).instantiate()
     node_ui.add_child(new_ui_scene)
     current_ui_scene = new_ui_scene
+    node_ui.process_mode = Node.PROCESS_MODE_INHERIT
     _connect_signals()
 
 
