@@ -3,8 +3,9 @@ extends RayCast3D
 
 
 @export var wheel_radius: float = 0.275
-@export var accelerates: bool = false
-@export var breaks: bool = true
+@export var is_steering: bool = false
+@export var is_accelerating: bool = false
+@export var is_breaking: bool = true
 
 @export_group("Suspension")
 @export var spring_strength: float = 150000.0
@@ -19,6 +20,10 @@ extends RayCast3D
 
 @onready var mesh: Node3D = get_child(0)
 
+var rpm: float = 0.0
+
+var wheel_lateral: float = 0.0
+
 
 func _ready() -> void:
     target_position.y = -(rest_dist + wheel_radius + over_extend)
@@ -28,7 +33,8 @@ func apply_wheel_physics_to_car(
     car: Car,
     accelerate_strength: float,
     break_strength: float,
-    skid_mark: GPUParticles3D
+    _skid_mark: GPUParticles3D,
+    delta: float
 ) -> void:
 
     if not is_colliding():
@@ -86,16 +92,17 @@ func apply_wheel_physics_to_car(
     #var wheel_forward_velocity: float = contact_forward.dot(car.linear_velocity)
     
     # TODO: improve wheels rotation (e.g., rotation when in the air)
-    mesh.rotate_x(-wheel_forward_velocity * get_physics_process_delta_time() / wheel_radius)
+    rpm = 60.0 * wheel_forward_velocity / (2.0 * wheel_radius * PI)
+    mesh.rotate_x(-wheel_forward_velocity * delta / wheel_radius)
     
-    #if (not (wheel.accelerates and accelerate_input > 0) and
-        #not (wheel.breaks and break_input > 0)):
+    #if (not (wheel.is_accelerating and accelerate_input > 0) and
+        #not (wheel.is_breaking and break_input > 0)):
             #return
     
-    if accelerates and not is_zero_approx(accelerate_strength):
+    if is_accelerating and not is_zero_approx(accelerate_strength):
         force_vector += contact_forward * accelerate_strength
     
-    if breaks and not is_zero_approx(break_strength):
+    if is_breaking and not is_zero_approx(break_strength):
         force_vector -= contact_forward * break_strength
     # ------------------------------------------------------------------------ #
     
@@ -103,23 +110,30 @@ func apply_wheel_physics_to_car(
     
     
     # --------- Lateral ------------------------------------------------- #
-    var gravity: float = car.get_gravity().y
-    var required_lateral_force: Vector3 = (
-        contact_lateral * wheel_lateral_velocity * ((car.mass*gravity)/4.0))
-    
-    var lateral_force: Vector3 = Vector3.ZERO
-    if required_lateral_force.length_squared() <= (static_firction * normal_force).length_squared():
-        lateral_force = required_lateral_force
-        skid_mark.emitting = false
-    else:
-        lateral_force = dynamic_friction * normal_force.length() * contact_lateral * -sign(wheel_lateral_velocity)
-        skid_mark.global_position = contact + Vector3.UP * 0.01
-        skid_mark.look_at(skid_mark.global_position + skid_mark.global_basis.z)
-        skid_mark.emitting = true
-    
+    #var gravity: float = car.get_gravity().y
+    #var required_lateral_force: Vector3 = (
+        #contact_lateral * wheel_lateral_velocity * ((car.mass*gravity)/4.0))
+    #
+    #var lateral_force: Vector3 = Vector3.ZERO
+    #if required_lateral_force.length_squared() <= (static_firction * normal_force).length_squared():
+        #lateral_force = required_lateral_force
+        #skid_mark.emitting = false
+    #else:
+        #lateral_force = dynamic_friction * normal_force.length() * contact_lateral * -sign(wheel_lateral_velocity)
+        #skid_mark.global_position = contact + Vector3.UP * 0.01
+        #skid_mark.look_at(skid_mark.global_position + skid_mark.global_basis.z)
+        #skid_mark.emitting = true
+
     # TODO: rename this shit
     #var forward_traction: float = 0.05
     #var forward_force: Vector3 = contact_forward * wheel_forward_velocity * forward_traction * ((car.mass*gravity)/4.0)
+
+    var desired_velocity_change = -wheel_lateral_velocity * 0.3
+    var desired_acceleration = desired_velocity_change / delta
+    
+    wheel_lateral = desired_acceleration * ((car.mass)/4.0)
+    var required_lateral_force = contact_lateral * desired_acceleration * ((car.mass)/4.0)
+    var lateral_force = required_lateral_force
     
     force_vector += lateral_force #+ forward_force
     # ------------------------------------------------------------------------ #

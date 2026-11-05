@@ -1,9 +1,6 @@
 [gd_scene format=3 uid="uid://bjtvbf3odn1oi"]
 
-[ext_resource type="PackedScene" uid="uid://ooxmr8h12uw0" path="res://objects/cars/car.tscn" id="1_5i0tg"]
 [ext_resource type="Script" uid="uid://bgfokg2wdah1e" path="res://scenes/game/game.gd" id="1_bdhmt"]
-[ext_resource type="PackedScene" uid="uid://c3fh0kq2pckke" path="res://assets/models/tracks/parking_garage_2.glb" id="2_bdhmt"]
-[ext_resource type="PackedScene" uid="uid://dkxjluj8gsve1" path="res://objects/tracks/track_1.tscn" id="3_87uf6"]
 [ext_resource type="PackedScene" uid="uid://c6j6qx753k25a" path="res://objects/cars/car_3.tscn" id="5_4j704"]
 [ext_resource type="Script" uid="uid://bfss2ay3swupq" path="res://scenes/game/camera_controls.gd" id="7_87uf6"]
 
@@ -20,24 +17,6 @@ transform = Transform3D(0.69909847, -0.60673296, 0.37833378, 0, 0.5291194, 0.848
 light_energy = 1.8
 light_indirect_energy = 0.5
 
-[node name="Car" parent="." unique_id=305355653 instance=ExtResource("1_5i0tg")]
-process_mode = 4
-transform = Transform3D(0.8607708, 0, 0.50899273, 0, 1, 0, -0.50899273, 0, 0.8607708, 57.316803, 0.26447225, 26.502163)
-visible = false
-
-[node name="CameraLookAt" type="Node3D" parent="Car" unique_id=1396160584]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5190289, 0)
-
-[node name="parking_garage_2" parent="." unique_id=2038809731 instance=ExtResource("2_bdhmt")]
-process_mode = 4
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -66.77867, 0.12512445, -116.716034)
-visible = false
-
-[node name="Track1" parent="." unique_id=114421550 instance=ExtResource("3_87uf6")]
-process_mode = 4
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64.5, 0, 10.836)
-visible = false
-
 [node name="Track" type="Node3D" parent="." unique_id=126272196]
 
 [node name="Car3" parent="." unique_id=1462057534 instance=ExtResource("5_4j704")]
@@ -46,9 +25,13 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -2, 
 [node name="CameraLookAt" type="Node3D" parent="Car3" unique_id=1862109960]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 
+[node name="Camera3D" type="Camera3D" parent="Car3" unique_id=1582292770]
+transform = Transform3D(1, -2.1855687e-08, -5.856215e-09, 2.1855689e-08, 0.8660254, 0.5, -5.8562115e-09, -0.5, 0.8660254, 1.0600037e-07, 1.6396382, 2.425006)
+
 [node name="CameraFollow" type="Node3D" parent="." unique_id=217824483 node_paths=PackedStringArray("look_at_node")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -4, 1.5, 0)
 script = ExtResource("7_87uf6")
 look_at_node = NodePath("../Car3/CameraLookAt")
 
 [node name="Camera3D" type="Camera3D" parent="CameraFollow" unique_id=625482712]
+current = true

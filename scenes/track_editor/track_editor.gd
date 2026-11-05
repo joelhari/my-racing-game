@@ -18,6 +18,8 @@ var start_finish_line: Node3D
 
 var start_finish_line_scene = preload("res://objects/timing/start_finish_line.tscn")
 
+var main_menu_ui_scene_path: String = "res://ui/main_menu.tscn"
+
 var cursor_coordinates: Vector2i = Vector2i(
     TrackEditorUtils.hex_coordinates_offset.x,
     TrackEditorUtils.hex_coordinates_offset.y)
@@ -60,6 +62,12 @@ func _ready() -> void:
 func _process(delta: float) -> void:
     camera.position = camera.position.move_toward(
         camera_target_position, camera_speed * delta)
+
+
+func _unhandled_input(event: InputEvent) -> void:
+    if event.is_action_pressed("ui_cancel"):
+        Global.game_controller.change_ui_scene(main_menu_ui_scene_path)
+        Global.game_controller.change_3d_scene("")
 
 
 func _input(event: InputEvent) -> void:
