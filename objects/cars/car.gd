@@ -22,6 +22,11 @@ var accelerating_wheels: Array[Wheel]
 @export var wheel_turn_speed: float = 1.0
 @export var wheel_turn_angle_curve: Curve
 
+@export_group("Chassis")
+@export var drag_coefficient: float = 0.3
+@export var air_density: float = 1.293
+@export var cross_section_area: float = 0.825
+
 @onready var engine_sound: AudioStreamPlayer3D = $EngineSound
 
 signal current_car_speed
@@ -71,6 +76,7 @@ func _physics_process(delta: float) -> void:
     _do_steering(velocity, delta)
     var accelerate_strength: float = _do_acceleration()
     var break_strength: float = _do_breaking(velocity)
+    _do_drag(velocity)
     
     # TODO: Implement drag and friction
 
@@ -110,7 +116,7 @@ func _do_acceleration() -> float:
     var gear_ratio_idx: int = gear if gear > 0 else 0
     assert(gear_ratio_idx >= 0 and gear_ratio_idx < gear_ratios.size())
     var engine_rpm = wheel_rpm * gear_ratios.get(gear_ratio_idx) * final_drive_ratio
-    engine_sound.pitch_scale = 1.0 + (engine_rpm / max_rpm) * 1.6
+    engine_sound.pitch_scale = 1.0 + (abs(engine_rpm) / max_rpm) * 1.6
 
     current_car_rpm.emit(engine_rpm)
     
@@ -142,6 +148,13 @@ func _do_breaking(velocity: float) -> float:
     if break_input > 0.0 and not is_zero_approx(velocity):
         break_strength = sign(velocity) * break_input * breaking
     return break_strength
+
+
+func _do_drag(_velocity: float) -> void:
+    var drag_force: float = (
+        drag_coefficient * cross_section_area * air_density *
+        linear_velocity.length_squared() / -2.0)
+    apply_central_force(linear_velocity.normalized() * drag_force)
 
 
 func _do_steering(velocity: float, delta: float) -> void:

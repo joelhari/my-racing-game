@@ -28,7 +28,7 @@ script = ExtResource("1_2rjty")
 wheels = [NodePath("WheelFL"), NodePath("WheelFR"), NodePath("WheelRL"), NodePath("WheelRR")]
 model_scale = 0.588
 torque_curve = SubResource("Curve_2rjty")
-gear_ratios = Array[float]([4.85, 5.59, 3.23, 1.8, 1.0, 0.55])
+gear_ratios = Array[float]([4.85, 5.68, 2.98, 1.67, 1.0, 0.67])
 wheel_turn_angle_curve = SubResource("Curve_cwtv4")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1354125802]
