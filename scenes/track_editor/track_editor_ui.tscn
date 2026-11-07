@@ -46,6 +46,26 @@ script = ExtResource("2_jjm1s")
 [node name="Control" type="Control" parent="GridContainer" unique_id=1696103972]
 layout_mode = 2
 
+[node name="RoadHairpinLeft" type="Button" parent="GridContainer" unique_id=1990466020]
+custom_minimum_size = Vector2(250, 250)
+custom_maximum_size = Vector2(250, 250)
+layout_mode = 2
+icon = ExtResource("8_77hkp")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("2_jjm1s")
+road_scene_idx = 7
+
+[node name="RoadHairpinRight" type="Button" parent="GridContainer" unique_id=1341273148]
+custom_minimum_size = Vector2(250, 250)
+custom_maximum_size = Vector2(250, 250)
+layout_mode = 2
+icon = ExtResource("9_y68k5")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("2_jjm1s")
+road_scene_idx = 8
+
 [node name="RoadSelectCurveLeft" type="Button" parent="GridContainer" unique_id=1522587141]
 custom_minimum_size = Vector2(250, 250)
 custom_maximum_size = Vector2(250, 250)
@@ -107,6 +127,8 @@ script = ExtResource("2_jjm1s")
 road_scene_idx = 6
 
 [connection signal="pressed" from="GridContainer/RoadSelectStraight" to="." method="_on_road_select_pressed" flags=18]
+[connection signal="pressed" from="GridContainer/RoadHairpinLeft" to="." method="_on_road_select_pressed" flags=18]
+[connection signal="pressed" from="GridContainer/RoadHairpinRight" to="." method="_on_road_select_pressed" flags=18]
 [connection signal="pressed" from="GridContainer/RoadSelectCurveLeft" to="." method="_on_road_select_pressed" flags=18]
 [connection signal="pressed" from="GridContainer/RoadSelectCurveRight" to="." method="_on_road_select_pressed" flags=18]
 [connection signal="pressed" from="GridContainer/RoadSelectCurveLeftWide" to="." method="_on_road_select_pressed" flags=18]

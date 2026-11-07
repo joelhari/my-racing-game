@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://b82573xurgk0v"]
+
+[ext_resource type="Script" uid="uid://clpwcpo7i0l3o" path="res://objects/roads/road.gd" id="1_gqn1e"]
+[ext_resource type="PackedScene" uid="uid://bxgnlyjbv7uug" path="res://assets/models/tracks/track_hairpin_right_borders_low.glb" id="2_gqn1e"]
+
+[node name="RoadHairpinRight" type="Node3D" unique_id=1654663290]
+script = ExtResource("1_gqn1e")
+road_name = "Right Hairpin"
+road_angle = -180
+road_next_coords = Dictionary[int, Vector3i]({
+0: Vector3i(-1, 0, 1),
+60: Vector3i(-1, 0, 0),
+120: Vector3i(0, 0, -1),
+180: Vector3i(1, 0, -1),
+240: Vector3i(1, 0, 0),
+300: Vector3i(0, 0, 1)
+})
+
+[node name="track_hairpin_right_borders_low" parent="." unique_id=1261908807 instance=ExtResource("2_gqn1e")]

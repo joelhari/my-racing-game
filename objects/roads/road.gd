@@ -3,7 +3,7 @@ extends Node3D
 
 
 @export var road_name: String
-@export_range(-60, 60, 60) var road_angle: int
+@export_range(-180, 180, 60) var road_angle: int
 @export var road_offset_coords: Dictionary[int, Vector3i] = {
     0: Vector3i(0, 0, 0),
     60: Vector3i(0, 0, 0),

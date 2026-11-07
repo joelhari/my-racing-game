@@ -20,6 +20,8 @@ var road_scenes: Dictionary[String, PackedScene] = {
     "res://objects/roads/road_curve_right_wide.tscn": preload("res://objects/roads/road_curve_right_wide.tscn"),
     "res://objects/roads/road_straight_up.tscn": preload("res://objects/roads/road_straight_up.tscn"),
     "res://objects/roads/road_straight_down.tscn": preload("res://objects/roads/road_straight_down.tscn"),
+    "res://objects/roads/road_hairpin_left.tscn": preload("res://objects/roads/road_hairpin_left.tscn"),
+    "res://objects/roads/road_hairpin_right.tscn": preload("res://objects/roads/road_hairpin_right.tscn"),
 }
 
 

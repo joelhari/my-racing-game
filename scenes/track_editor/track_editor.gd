@@ -14,6 +14,8 @@ var road_scenes: Array[PackedScene] = [
     preload("res://objects/roads/road_curve_right_wide.tscn"),
     preload("res://objects/roads/road_straight_up.tscn"),
     preload("res://objects/roads/road_straight_down.tscn"),
+    preload("res://objects/roads/road_hairpin_left.tscn"),
+    preload("res://objects/roads/road_hairpin_right.tscn"),
 ]
 var roads_placed: Dictionary[int, Road] = {}
 var roads_placed_stack: Array[int] = []
