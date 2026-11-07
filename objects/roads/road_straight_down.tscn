@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://yj6fgmguhni0"]
+
+[ext_resource type="Script" uid="uid://clpwcpo7i0l3o" path="res://objects/roads/road.gd" id="1_uox8e"]
+[ext_resource type="PackedScene" uid="uid://57r08a24cme0" path="res://assets/models/tracks/track_straight_down_borders_low.glb" id="2_uox8e"]
+
+[node name="RoadStraightDown" type="Node3D" unique_id=1651386092]
+script = ExtResource("1_uox8e")
+road_name = "Straight Down"
+road_offset_coords = Dictionary[int, Vector3i]({
+0: Vector3i(0, -1, 0),
+60: Vector3i(0, -1, 0),
+120: Vector3i(0, -1, 0),
+180: Vector3i(0, -1, 0),
+240: Vector3i(0, -1, 0),
+300: Vector3i(0, -1, 0)
+})
+road_next_coords = Dictionary[int, Vector3i]({
+0: Vector3i(2, -1, 0),
+60: Vector3i(2, -1, -2),
+120: Vector3i(0, -1, -2),
+180: Vector3i(-2, -1, 0),
+240: Vector3i(-2, -1, 2),
+300: Vector3i(0, -1, 2)
+})
+
+[node name="track_straight_down_borders_low" parent="." unique_id=853019836 instance=ExtResource("2_uox8e")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)

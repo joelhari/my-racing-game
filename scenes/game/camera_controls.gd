@@ -3,6 +3,7 @@ extends Node3D
 
 @export var look_at_node: Node3D
 @export var distance: float = 3.0
+@export var height: float = 0.8
 
 @onready var camera: Camera3D = $Camera3D
 
@@ -16,6 +17,7 @@ func _update_camera() -> void:
     var move: Vector3 = look_at_node.global_position - global_position
     var dist: Vector3 = move.normalized() * distance
     position += Vector3(move.x - dist.x, 0, move.z - dist.z)
+    global_position.y = look_at_node.global_position.y + height
     
     var look_input: Vector3 = Vector3(
         Input.get_axis("look_left", "look_right"),

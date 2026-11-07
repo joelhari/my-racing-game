@@ -102,4 +102,5 @@ mesh = ExtResource("6_ob2en")
 [node name="EngineSound" type="AudioStreamPlayer3D" parent="." unique_id=1825055781]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.40786478, 0.5980105)
 stream = SubResource("AudioStreamMP3_2rjty")
+volume_db = -20.0
 autoplay = true

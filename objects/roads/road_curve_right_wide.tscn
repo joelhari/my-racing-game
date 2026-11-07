@@ -7,21 +7,21 @@
 script = ExtResource("1_xyqnf")
 road_name = "Curve Right Wide"
 road_angle = -60
-road_offset_coords = Dictionary[int, Vector2i]({
-0: Vector2i(1, 0),
-60: Vector2i(1, -1),
-120: Vector2i(0, -1),
-180: Vector2i(-1, 0),
-240: Vector2i(-1, 1),
-300: Vector2i(0, 1)
+road_offset_coords = Dictionary[int, Vector3i]({
+0: Vector3i(1, 0, 0),
+60: Vector3i(1, 0, -1),
+120: Vector3i(0, 0, -1),
+180: Vector3i(-1, 0, 0),
+240: Vector3i(-1, 0, 1),
+300: Vector3i(0, 0, 1)
 })
-road_next_coords = Dictionary[int, Vector2i]({
-0: Vector2i(1, 2),
-60: Vector2i(3, -1),
-120: Vector2i(2, -3),
-180: Vector2i(-1, -2),
-240: Vector2i(-3, 1),
-300: Vector2i(-2, 3)
+road_next_coords = Dictionary[int, Vector3i]({
+0: Vector3i(1, 0, 2),
+60: Vector3i(3, 0, -1),
+120: Vector3i(2, 0, -3),
+180: Vector3i(-1, 0, -2),
+240: Vector3i(-3, 0, 1),
+300: Vector3i(-2, 0, 3)
 })
 
 [node name="track_curve_right_wide_borders_low" parent="." unique_id=696089712 instance=ExtResource("2_8he68")]

@@ -4,7 +4,20 @@
 [ext_resource type="PackedScene" uid="uid://c6j6qx753k25a" path="res://objects/cars/car_3.tscn" id="5_4j704"]
 [ext_resource type="Script" uid="uid://bfss2ay3swupq" path="res://scenes/game/camera_controls.gd" id="7_87uf6"]
 
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_36dau"]
+
+[sub_resource type="Sky" id="Sky_ciioy"]
+sky_material = SubResource("ProceduralSkyMaterial_36dau")
+
 [sub_resource type="Environment" id="Environment_6kggx"]
+background_mode = 2
+sky = SubResource("Sky_ciioy")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_6kggx"]
+size = Vector2(1000, 1000)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cwtv4"]
+albedo_color = Color(0.1550549, 0.37561724, 0.21049893, 1)
 
 [node name="Game" type="Node3D" unique_id=1279629421]
 script = ExtResource("1_bdhmt")
@@ -14,8 +27,14 @@ environment = SubResource("Environment_6kggx")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1650940499]
 transform = Transform3D(0.69909847, -0.60673296, 0.37833378, 0, 0.5291194, 0.8485474, -0.7150254, -0.5932182, 0.3699065, 0, 7.498417, 0)
-light_energy = 1.8
+light_energy = 1.2
 light_indirect_energy = 0.5
+light_specular = 0.5
+shadow_enabled = true
+
+[node name="Floor" type="MeshInstance3D" parent="." unique_id=1251230037]
+mesh = SubResource("PlaneMesh_6kggx")
+surface_material_override/0 = SubResource("StandardMaterial3D_cwtv4")
 
 [node name="Track" type="Node3D" parent="." unique_id=126272196]
 
@@ -35,3 +54,5 @@ look_at_node = NodePath("../Car3/CameraLookAt")
 
 [node name="Camera3D" type="Camera3D" parent="CameraFollow" unique_id=625482712]
 current = true
+
+[node name="LightmapGI" type="LightmapGI" parent="." unique_id=1810146998]

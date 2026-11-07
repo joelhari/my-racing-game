@@ -12,6 +12,8 @@ var road_scenes: Array[PackedScene] = [
     preload("res://objects/roads/road_curve_right.tscn"),
     preload("res://objects/roads/road_curve_left_wide.tscn"),
     preload("res://objects/roads/road_curve_right_wide.tscn"),
+    preload("res://objects/roads/road_straight_up.tscn"),
+    preload("res://objects/roads/road_straight_down.tscn"),
 ]
 var roads_placed: Dictionary[int, Road] = {}
 var roads_placed_stack: Array[int] = []
@@ -22,12 +24,13 @@ var start_finish_line_scene = preload("res://objects/timing/start_finish_line.ts
 
 var main_menu_ui_scene_path: String = "res://ui/main_menu.tscn"
 
-var cursor_coordinates: Vector2i = Vector2i(
+var cursor_coordinates: Vector3i = Vector3i(
     TrackEditorUtils.hex_coordinates_offset.x,
-    TrackEditorUtils.hex_coordinates_offset.y)
+    TrackEditorUtils.hex_coordinates_offset.y,
+    TrackEditorUtils.hex_coordinates_offset.z)
 var cursor_rotation: int = 0
 var selected_road_idx: int = 0
-var camera_height: float = 4.0
+var camera_height: float = 100
 var camera_target_position: Vector3 = Vector3(0.0, camera_height, 0.0)
 
 var storage_service: StorageService
@@ -99,7 +102,7 @@ func _load_saved_track() -> void:
 
     var location_id: int = roads_placed_stack.back()
     if location_id:
-        var hex_coords: Vector2i = TrackEditorUtils.location_id_to_hex_coordinates(location_id)
+        var hex_coords: Vector3i = TrackEditorUtils.location_id_to_hex_coordinates(location_id)
         var road: Road = roads_placed.get(location_id)
         _set_cursor_coordinates(hex_coords)
         _set_cursor_rotation(int(round(road.rotation_degrees.y)))
@@ -121,7 +124,7 @@ func _place_road_at_cursor(road_idx: int) -> void:
     var road: Road = road_scenes.get(road_idx).instantiate()
     
     track.add_child(road)
-    var coords: Vector2i = cursor_coordinates + road.road_offset_coords.get(cursor_rotation)
+    var coords: Vector3i = cursor_coordinates + road.road_offset_coords.get(cursor_rotation)
     road.global_position = TrackEditorUtils.hex_coords_to_world_coords(coords)
     road.global_rotation = Vector3(0.0, deg_to_rad(cursor_rotation), 0.0)
     _add_road_to_placed_roads(road, coords)
@@ -143,7 +146,7 @@ func _remove_last_placed_road() -> void:
     road.queue_free()
 
 
-func _add_road_to_placed_roads(road: Road, hex_coords: Vector2i) -> void:
+func _add_road_to_placed_roads(road: Road, hex_coords: Vector3i) -> void:
     var location_id: int = TrackEditorUtils.hex_coordinates_to_location_id(hex_coords)
     assert(not roads_placed.has(location_id))
     roads_placed.set(location_id, road)
@@ -169,7 +172,7 @@ func _update_cursor_coordinates(road: Road, forward: bool = true) -> void:
     location_blocked = _is_location_blocked(cursor_coordinates)
 
 
-func _set_cursor_coordinates(hex_coords: Vector2i) -> void:
+func _set_cursor_coordinates(hex_coords: Vector3i) -> void:
     cursor_coordinates = hex_coords
     location_blocked = _is_location_blocked(cursor_coordinates)
 
@@ -186,7 +189,7 @@ func _set_cursor_rotation(rotation: int) -> void:
         cursor_rotation -= 360
 
 
-func _is_location_blocked(hex_coords: Vector2i) -> bool:
+func _is_location_blocked(hex_coords: Vector3i) -> bool:
     var location_id: int = TrackEditorUtils.hex_coordinates_to_location_id(hex_coords)
     return roads_placed.has(location_id)
 
