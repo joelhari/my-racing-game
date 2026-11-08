@@ -9,6 +9,9 @@ extends Object
 #                 location_id: [scene_file_path, rotation_deg_y]
 #             }
 #     line 3: Roads Placed Stack => Array[int] = [location_id, ...]
+#     line 4: Coords Blocked => Dictionary[int, bool] = {
+#                 location_id: true
+#             }
 
 
 
@@ -28,7 +31,8 @@ var road_scenes: Dictionary[String, PackedScene] = {
 func save_track(
     start_finish_line: Node3D,
     roads_placed: Dictionary[int, Road],
-    roads_placed_stack: Array[int]
+    roads_placed_stack: Array[int],
+    coords_blocked: Dictionary[int, bool]
 ) -> void:
     var save_file = FileAccess.open("user://savegame.save", FileAccess.WRITE)
 
@@ -56,6 +60,9 @@ func save_track(
     save_file.store_line(JSON.stringify(placed_roads_data))
     
     save_file.store_line(JSON.stringify(roads_placed_stack))
+    
+    var coords_blocked_data: Array[int] = coords_blocked.keys()
+    save_file.store_line(JSON.stringify(coords_blocked_data))
 
 
 func load_track(track_node: Node3D) -> Array:
@@ -94,7 +101,17 @@ func load_track(track_node: Node3D) -> Array:
 
     var roads_placed_stack: Array[int] = _load_roads_placed_stack(json)
 
-    return [start_finish_line, roads_placed, roads_placed_stack]
+    # ----- Line 4: coords_blocked
+    json_string = save_file.get_line()
+    json = JSON.new()
+    parse_result = json.parse(json_string)
+    if not parse_result == OK:
+        print("JSON Parse Error: ", json.get_error_message(), " in ", json_string, " at line ", json.get_error_line())
+        return []
+    
+    var coords_blocked: Dictionary[int, bool] = _load_coords_blocked(json)
+
+    return [start_finish_line, roads_placed, roads_placed_stack, coords_blocked]
 
 
 func _load_start_finish_line(track_node: Node3D, json: JSON) -> Node3D:
@@ -138,3 +155,13 @@ func _load_roads_placed_stack(json: JSON) -> Array[int]:
         roads_placed_stack.append(int(location_id_str))
     
     return roads_placed_stack
+
+
+func _load_coords_blocked(json: JSON) -> Dictionary[int, bool]:
+    var save_data: Array = json.data
+    var coords_blocked: Dictionary[int, bool] = {}
+    
+    for location_id_str in save_data:
+        coords_blocked.set(int(location_id_str), true)
+    
+    return coords_blocked

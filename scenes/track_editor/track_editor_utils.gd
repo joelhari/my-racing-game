@@ -28,3 +28,27 @@ static func location_id_to_hex_coordinates(location_id: int) -> Vector3i:
         (location_id >> 16) & 0b1111111111111111,
         location_id & 0b1111111111111111)
     return hex_coords
+
+
+static func rotate_hex_coords_around_origin(
+    hex_coords: Vector3i,
+    clock_wise: bool = true,
+    steps: int = 1
+) -> Vector3i:
+    var q: int = hex_coords.x
+    var r: int = hex_coords.z
+    var s: int = -q - r
+    
+    for i in range(steps):
+        if clock_wise:
+            var tmp_q: int = q
+            q = -r
+            r = -s
+            s = -tmp_q
+        else:
+            var tmp_s: int = s
+            s = -r
+            r = -q
+            q = -tmp_s
+            
+    return Vector3i(q, hex_coords.y, r)
