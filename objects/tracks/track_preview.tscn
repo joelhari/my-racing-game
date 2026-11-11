@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://ccvhx4dfdp5xs"]
+
+[ext_resource type="Script" uid="uid://52f5kvbfat2q" path="res://objects/tracks/track_preview.gd" id="1_nfgd1"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_nfgd1"]
+
+[sub_resource type="Sky" id="Sky_ciioy"]
+sky_material = SubResource("ProceduralSkyMaterial_nfgd1")
+
+[sub_resource type="Environment" id="Environment_1thif"]
+background_mode = 2
+sky = SubResource("Sky_ciioy")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_xa73f"]
+size = Vector2(1000, 1000)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2pgqx"]
+albedo_color = Color(0.1550549, 0.37561724, 0.21049893, 1)
+
+[node name="TrackPreview" type="Node3D" unique_id=2060480214]
+script = ExtResource("1_nfgd1")
+
+[node name="Track" type="Node3D" parent="." unique_id=1211311946]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1241994955]
+environment = SubResource("Environment_1thif")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=896180934]
+transform = Transform3D(0.69909847, -0.60673296, 0.37833378, 0, 0.5291194, 0.8485474, -0.7150254, -0.5932182, 0.3699065, 0, 7.498417, 0)
+light_energy = 1.2
+light_indirect_energy = 0.5
+light_specular = 0.5
+shadow_enabled = true
+
+[node name="Floor" type="MeshInstance3D" parent="." unique_id=2048375584]
+mesh = SubResource("PlaneMesh_xa73f")
+surface_material_override/0 = SubResource("StandardMaterial3D_2pgqx")

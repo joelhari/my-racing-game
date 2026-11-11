@@ -1,3 +1,4 @@
+@tool
 class_name TrackEditorUtils
 extends Object
 
@@ -9,10 +10,10 @@ static var hex_coordinates_offset: Vector3i = Vector3i(10_000, 1_000, 10_000)
 
 
 static func hex_coords_to_world_coords(hex_coords: Vector3i) -> Vector3:
-    var hex_coords_without_offset = hex_coords - TrackEditorUtils.hex_coordinates_offset
+    var hex_coords_without_offset: Vector3i = hex_coords - TrackEditorUtils.hex_coordinates_offset
     var world_coordinates: Vector3 = Vector3.ZERO
     world_coordinates.x = (hex_coords_without_offset.x + hex_coords_without_offset.z / 2.0) * TrackEditorUtils.grid_size * TrackEditorUtils.sqrt_three
-    world_coordinates.y = hex_coords_without_offset.y * delta_height
+    world_coordinates.y = hex_coords_without_offset.y * TrackEditorUtils.delta_height
     world_coordinates.z = hex_coords_without_offset.z * 1.5 * TrackEditorUtils.grid_size
     return world_coordinates
 
