@@ -3,17 +3,26 @@ extends Object
 
 # ----- Storage Service ------------------------------------------------------ #
 #
-# Save file format:
-#     line 1: Start Finish Line => Dictionary[String, any]
-#     line 2: Roads Placed => Dictionary[int, Array] = {
+# Track save file:
+#     line 1: Meta data => Dictionary[String, any]
+#     line 2: Start Finish Line => Dictionary[String, any]
+#     line 3: Roads Placed => Dictionary[int, Array] = {
 #                 location_id: [scene_file_path, rotation_deg_y]
 #             }
-#     line 3: Roads Placed Stack => Array[int] = [location_id, ...]
-#     line 4: Coords Blocked => Dictionary[int, bool] = {
+#     line 4: Roads Placed Stack => Array[int] = [location_id, ...]
+#     line 5: Coords Blocked => Dictionary[int, bool] = {
 #                 location_id: true
 #             }
+#
+# Tracks save file:
+#     line 1: uid;track_name
+#     line 2: uid;track_name
+#     line 3: ...
+#
 
 
+var track_list_file_name: String = "user://tracklist.save"
+var track_file_name: String = "user://%d.save"
 
 var road_scenes: Dictionary[String, PackedScene] = {
     "res://objects/roads/road_straight.tscn": preload("res://objects/roads/road_straight.tscn"),
@@ -28,13 +37,57 @@ var road_scenes: Dictionary[String, PackedScene] = {
 }
 
 
+func load_track_list() -> Dictionary[int, String]:
+    if not FileAccess.file_exists(track_list_file_name):
+        return {}
+    
+    var save_file: FileAccess = FileAccess.open(
+        track_list_file_name, FileAccess.READ)
+    var track_list: Dictionary[int, String] = {}
+    
+    while save_file.get_position() < save_file.get_length():
+        var track_str: String = save_file.get_line()
+        var track_str_split = track_str.split(";")
+        assert(track_str_split.size() == 2)
+        
+        track_list.set(
+            int(track_str_split.get(0)),
+            track_str_split.get(1))
+    
+    save_file.close()
+    
+    return track_list
+
+
 func save_track(
+    track_name: String,
     start_finish_line: Node3D,
     roads_placed: Dictionary[int, Road],
     roads_placed_stack: Array[int],
-    coords_blocked: Dictionary[int, bool]
+    coords_blocked: Dictionary[int, bool],
+    uid: int = -1
 ) -> void:
-    var save_file = FileAccess.open("user://savegame.save", FileAccess.WRITE)
+    if uid < 0:
+        uid = ResourceUID.create_id()
+    
+    var track_list_file: FileAccess
+    if FileAccess.file_exists(track_list_file_name):
+        track_list_file = FileAccess.open(
+            track_list_file_name, FileAccess.READ_WRITE)
+    else:
+        track_list_file = FileAccess.open(
+            track_list_file_name, FileAccess.WRITE)
+    track_list_file.seek_end()
+    track_list_file.store_line("%d;%s" % [uid, track_name])
+    track_list_file.close()
+    
+    var file_name: String = track_file_name % uid
+    var save_file: FileAccess = FileAccess.open(file_name, FileAccess.WRITE)
+    
+    var meta_data: Dictionary = {
+        "name": track_name
+    }
+    save_file.store_line(JSON.stringify(meta_data))
 
     if start_finish_line.scene_file_path.is_empty():
         print("persistent node '%s' is not an instanced scene, skipped" % start_finish_line.name)
@@ -63,25 +116,39 @@ func save_track(
     
     var coords_blocked_data: Array[int] = coords_blocked.keys()
     save_file.store_line(JSON.stringify(coords_blocked_data))
+    
+    save_file.close()
 
 
-func load_track(track_node: Node3D) -> Array:
-    if not FileAccess.file_exists("user://savegame.save"):
+func load_track(uid: int, track_node: Node3D) -> Array:
+    var file_name: String = track_file_name % uid
+    
+    if not FileAccess.file_exists(file_name):
         return [] # Error! We don't have a save to load.
     
-    var save_file = FileAccess.open("user://savegame.save", FileAccess.READ)
+    var save_file: FileAccess = FileAccess.open(file_name, FileAccess.READ)
 
-    # ----- Line 1: start_finish_line
-    var json_string = save_file.get_line()
-    var json = JSON.new()
-    var parse_result = json.parse(json_string)
+    # ----- Line 1: meta data
+    var json_string: String = save_file.get_line()
+    var json: JSON = JSON.new()
+    var parse_result: Error = json.parse(json_string)
+    if not parse_result == OK:
+        print("JSON Parse Error: ", json.get_error_message(), " in ", json_string, " at line ", json.get_error_line())
+        return []
+    
+    var meta_data: Dictionary = json.data
+
+    # ----- Line 2: start_finish_line
+    json_string = save_file.get_line()
+    json = JSON.new()
+    parse_result = json.parse(json_string)
     if not parse_result == OK:
         print("JSON Parse Error: ", json.get_error_message(), " in ", json_string, " at line ", json.get_error_line())
         return []
     
     var start_finish_line: Node3D = _load_start_finish_line(track_node, json)
     
-    # ----- Line 2: roads_placed
+    # ----- Line 3: roads_placed
     json_string = save_file.get_line()
     json = JSON.new()
     parse_result = json.parse(json_string)
@@ -91,7 +158,7 @@ func load_track(track_node: Node3D) -> Array:
     
     var roads_placed: Dictionary[int, Road] = _load_roads_placed(track_node, json)
     
-    # ----- Line 3: roads_placed_stack
+    # ----- Line 4: roads_placed_stack
     json_string = save_file.get_line()
     json = JSON.new()
     parse_result = json.parse(json_string)
@@ -101,7 +168,7 @@ func load_track(track_node: Node3D) -> Array:
 
     var roads_placed_stack: Array[int] = _load_roads_placed_stack(json)
 
-    # ----- Line 4: coords_blocked
+    # ----- Line 5: coords_blocked
     json_string = save_file.get_line()
     json = JSON.new()
     parse_result = json.parse(json_string)
@@ -110,8 +177,13 @@ func load_track(track_node: Node3D) -> Array:
         return []
     
     var coords_blocked: Dictionary[int, bool] = _load_coords_blocked(json)
+    
+    save_file.close()
 
-    return [start_finish_line, roads_placed, roads_placed_stack, coords_blocked]
+    return [
+        meta_data, start_finish_line, roads_placed,
+        roads_placed_stack, coords_blocked
+    ]
 
 
 func _load_start_finish_line(track_node: Node3D, json: JSON) -> Node3D:

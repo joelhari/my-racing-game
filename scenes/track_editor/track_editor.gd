@@ -25,7 +25,8 @@ var start_finish_line: Node3D
 
 var start_finish_line_scene = preload("res://objects/timing/start_finish_line.tscn")
 
-var main_menu_ui_scene_path: String = "res://ui/main_menu.tscn"
+var MAIN_MENU_SCENE_UID: String = ""
+var MAIN_MENU_UI_SCENE_UID: String = "uid://c57vu5s1u5v7t"
 
 var cursor_coordinates: Vector3i = Vector3i(
     TrackEditorUtils.hex_coordinates_offset.x,
@@ -37,16 +38,32 @@ var camera_height: float = 100
 var camera_target_position: Vector3 = Vector3(0.0, camera_height, 0.0)
 
 var storage_service: StorageService
+var loaded_track_uid: int = -1
+var track_meta_data: Dictionary = {}
+var ui_scene: Control
 
 
 func on_select_road(idx: int) -> void:
     _place_road_at_cursor(idx)
 
 
-func connect_signals(ui_scene: Control) -> void:
-    assert(ui_scene != null)
+func on_save_track(track_name: String) -> void:
+    _save_track(track_name)
+
+
+func pass_args(args: Array) -> void:
+    assert(args.size() == 1)
+    assert(args.get(0) is int)
+    _load_saved_track(args.get(0))
+
+
+func connect_signals(ui_scene_: Control) -> void:
+    assert(ui_scene_ != null)
+    ui_scene = ui_scene_
     if ui_scene.has_signal("select_road"):
         ui_scene.select_road.connect(on_select_road)
+    if ui_scene.has_signal("save_track"):
+        ui_scene.save_track.connect(on_save_track)
 
 
 func _ready() -> void:
@@ -65,45 +82,48 @@ func _process(delta: float) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
     if event.is_action_pressed("ui_cancel"):
-        Global.game_controller.change_ui_scene(main_menu_ui_scene_path)
-        Global.game_controller.change_3d_scene("")
+        Global.game_controller.change_ui_scene(MAIN_MENU_UI_SCENE_UID)
+        Global.game_controller.change_3d_scene(MAIN_MENU_SCENE_UID)
 
 
 func _input(event: InputEvent) -> void:
     if event.is_action_pressed("menu_left"):
         pass
     elif event.is_action_pressed("menu_right"):
-        print(track.get_child_count())
         pass
     elif event.is_action_pressed("menu_up"):
-        storage_service.save_track(
-            start_finish_line, roads_placed, roads_placed_stack, coords_blocked)
+        pass
     elif event.is_action_pressed("menu_down"):
-        _load_saved_track()
+        pass
     elif event.is_action_pressed("menu_confirm"):
         pass
     elif event.is_action_pressed("menu_cancel"):
         _remove_last_placed_road()
-        #var viewport = camera.get_viewport()
-        #var img = viewport.get_texture().get_image()
-        #img.save_png('res://road_curve_left.png')
 
 
-func _load_saved_track() -> void:
+func _save_track(track_name: String) -> void:
+        storage_service.save_track(
+            track_name, start_finish_line, roads_placed,
+            roads_placed_stack, coords_blocked, loaded_track_uid)
+
+
+func _load_saved_track(uid: int) -> void:
+    loaded_track_uid = uid
     var remove_roads: Array[Node] = track.get_children()
     
-    var res: Array = storage_service.load_track(track)
-    if not res or res.size() != 4:
+    var res: Array = storage_service.load_track(uid, track)
+    if not res or res.size() != 5:
         print("Error loading saved track!")
         return
     
     for node in remove_roads:
         node.queue_free()
     
-    start_finish_line = res.get(0)
-    roads_placed = res.get(1)
-    roads_placed_stack = res.get(2)
-    coords_blocked = res.get(3)
+    track_meta_data = res.get(0)
+    start_finish_line = res.get(1)
+    roads_placed = res.get(2)
+    roads_placed_stack = res.get(3)
+    coords_blocked = res.get(4)
 
     var location_id: int = roads_placed_stack.back()
     if location_id:
@@ -114,6 +134,9 @@ func _load_saved_track() -> void:
         _update_cursor_coordinates(road)
         _update_cursor_rotation(road.road_angle)
         _move_camera_to_cursor()
+    
+    if track_meta_data and track_meta_data.has("name"):
+        ui_scene.set_track_name_input_value(track_meta_data.get("name"))
 
 
 func _place_start_finish_line_at_cursor() -> void:

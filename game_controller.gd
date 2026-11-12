@@ -16,6 +16,7 @@ func _ready() -> void:
 
 func change_3d_scene(
     new_3d_scene_path: String,
+    args: Array = [],
     delete: bool = true,
     keep_running: bool = false
 ) -> void:
@@ -35,10 +36,12 @@ func change_3d_scene(
     current_3d_scene = new_3d_scene
     node_3d.process_mode = Node.PROCESS_MODE_INHERIT
     _connect_signals()
+    _pass_args(current_3d_scene, args)
 
 
 func change_ui_scene(
     new_ui_scene_path: String,
+    args: Array = [],
     delete: bool = true,
     keep_running: bool = false
 ) -> void:
@@ -58,6 +61,13 @@ func change_ui_scene(
     current_ui_scene = new_ui_scene
     node_ui.process_mode = Node.PROCESS_MODE_INHERIT
     _connect_signals()
+    _pass_args(current_ui_scene, args)
+
+
+func _pass_args(scene: Node, args: Array) -> void:
+    if (args != null and args.size() > 0
+            and scene != null and scene.has_method("pass_args")):
+        scene.pass_args(args)
 
 
 func _connect_signals() -> void:

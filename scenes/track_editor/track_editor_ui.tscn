@@ -126,6 +126,32 @@ expand_icon = true
 script = ExtResource("2_jjm1s")
 road_scene_idx = 6
 
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1528501581]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -336.0
+offset_top = -80.0
+offset_right = -21.0
+offset_bottom = -22.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 8
+alignment = 2
+
+[node name="TrackNameInput" type="LineEdit" parent="HBoxContainer" unique_id=73407692]
+layout_mode = 2
+placeholder_text = "Track Name"
+expand_to_text_length = true
+emoji_menu_enabled = false
+
+[node name="SaveButton" type="Button" parent="HBoxContainer" unique_id=2037025492]
+layout_mode = 2
+text = "Save"
+
 [connection signal="pressed" from="GridContainer/RoadSelectStraight" to="." method="_on_road_select_pressed" flags=18]
 [connection signal="pressed" from="GridContainer/RoadHairpinLeft" to="." method="_on_road_select_pressed" flags=18]
 [connection signal="pressed" from="GridContainer/RoadHairpinRight" to="." method="_on_road_select_pressed" flags=18]
@@ -135,3 +161,4 @@ road_scene_idx = 6
 [connection signal="pressed" from="GridContainer/RoadSelectCurveRightWide" to="." method="_on_road_select_pressed" flags=18]
 [connection signal="pressed" from="GridContainer/RoadSelectStraightUp" to="." method="_on_road_select_pressed" flags=18]
 [connection signal="pressed" from="GridContainer/RoadSelectStraightDown" to="." method="_on_road_select_pressed" flags=18]
+[connection signal="pressed" from="HBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
