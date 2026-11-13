@@ -21,7 +21,7 @@ var roads_placed: Dictionary[int, Road] = {}
 var roads_placed_stack: Array[int] = []
 var coords_blocked: Dictionary[int, bool] = {}
 var location_blocked: bool = false
-var start_finish_line: Node3D
+var start_finish_line: StartFinishLine
 
 var start_finish_line_scene = preload("res://objects/timing/start_finish_line.tscn")
 

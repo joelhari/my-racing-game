@@ -4,5 +4,7 @@
 default_base_scale = 2.0
 default_font_size = 36
 BoxContainer/constants/separation = 8
+GridContainer/constants/h_separation = 20
+GridContainer/constants/v_separation = 8
 ItemList/constants/h_separation = 36
 LineEdit/constants/minimum_character_width = 16
