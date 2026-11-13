@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://dtlv7sjjng21c"]
+
+[ext_resource type="PackedScene" uid="uid://das6t6i32g3f7" path="res://assets/models/objects/dist_sign_200.glb" id="1_xle5w"]
+
+[node name="DistanceSign" type="Node3D" unique_id=429266615]
+
+[node name="dist_sign_200" parent="." unique_id=544602228 instance=ExtResource("1_xle5w")]

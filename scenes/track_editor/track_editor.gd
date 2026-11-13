@@ -7,15 +7,15 @@ extends Node3D
 @onready var track: Node3D = $Track
 
 var road_scenes: Array[PackedScene] = [
-    preload("res://objects/roads/road_straight.tscn"),
-    preload("res://objects/roads/road_curve_left.tscn"),
-    preload("res://objects/roads/road_curve_right.tscn"),
-    preload("res://objects/roads/road_curve_left_wide.tscn"),
-    preload("res://objects/roads/road_curve_right_wide.tscn"),
-    preload("res://objects/roads/road_straight_up.tscn"),
-    preload("res://objects/roads/road_straight_down.tscn"),
-    preload("res://objects/roads/road_hairpin_left.tscn"),
-    preload("res://objects/roads/road_hairpin_right.tscn"),
+    preload("uid://bx5ti6rwkjlh1"), # road_straight.tscn
+    preload("uid://btp6wjgnb15e0"), # road_curve_left.tscn
+    preload("uid://c2u52k3wlfhst"), # road_curve_right.tscn
+    preload("uid://df0t1rv1jjebp"), # road_curve_left_wide.tscn
+    preload("uid://72aeutt6a8d7"),  # road_curve_right_wide.tscn
+    preload("uid://duflxn7t5dwr5"), # road_straight_up.tscn
+    preload("uid://yj6fgmguhni0"),  # road_straight_down.tscn
+    preload("uid://bpenkpn6cmci7"), # road_hairpin_left.tscn
+    preload("uid://b82573xurgk0v"), # road_hairpin_right.tscn
 ]
 var roads_placed: Dictionary[int, Road] = {}
 var roads_placed_stack: Array[int] = []

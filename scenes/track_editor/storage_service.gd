@@ -25,16 +25,20 @@ var track_list_file_name: String = "user://tracklist.save"
 var track_file_name: String = "user://%d.save"
 
 var road_scenes: Dictionary[String, PackedScene] = {
-    "res://objects/roads/road_straight.tscn": preload("res://objects/roads/road_straight.tscn"),
-    "res://objects/roads/road_curve_left.tscn": preload("res://objects/roads/road_curve_left.tscn"),
-    "res://objects/roads/road_curve_right.tscn": preload("res://objects/roads/road_curve_right.tscn"),
-    "res://objects/roads/road_curve_left_wide.tscn": preload("res://objects/roads/road_curve_left_wide.tscn"),
-    "res://objects/roads/road_curve_right_wide.tscn": preload("res://objects/roads/road_curve_right_wide.tscn"),
-    "res://objects/roads/road_straight_up.tscn": preload("res://objects/roads/road_straight_up.tscn"),
-    "res://objects/roads/road_straight_down.tscn": preload("res://objects/roads/road_straight_down.tscn"),
-    "res://objects/roads/road_hairpin_left.tscn": preload("res://objects/roads/road_hairpin_left.tscn"),
-    "res://objects/roads/road_hairpin_right.tscn": preload("res://objects/roads/road_hairpin_right.tscn"),
+    "uid://bx5ti6rwkjlh1": preload("uid://bx5ti6rwkjlh1"), # road_straight.tscn
+    "uid://btp6wjgnb15e0": preload("uid://btp6wjgnb15e0"), # road_curve_left.tscn
+    "uid://c2u52k3wlfhst": preload("uid://c2u52k3wlfhst"), # road_curve_right.tscn
+    "uid://df0t1rv1jjebp": preload("uid://df0t1rv1jjebp"), # road_curve_left_wide.tscn
+    "uid://72aeutt6a8d7": preload("uid://72aeutt6a8d7"),   # road_curve_right_wide.tscn
+    "uid://duflxn7t5dwr5": preload("uid://duflxn7t5dwr5"), # road_straight_up.tscn
+    "uid://yj6fgmguhni0": preload("uid://yj6fgmguhni0"),   # road_straight_down.tscn
+    "uid://bpenkpn6cmci7": preload("uid://bpenkpn6cmci7"), # road_hairpin_left.tscn
+    "uid://b82573xurgk0v": preload("uid://b82573xurgk0v"), # road_hairpin_right.tscn
 }
+
+const DIST_SIGN_START: int = 5
+const DIST_SIGN_GAP: int = 5
+const DIST_SIGN_COUNT: int = 4
 
 
 func load_track_list() -> Dictionary[int, String]:
@@ -93,7 +97,7 @@ func save_track(
         print("persistent node '%s' is not an instanced scene, skipped" % start_finish_line.name)
         return
     var start_finish_line_data: Dictionary = {
-        "scene_file_path": start_finish_line.scene_file_path,
+        "scene_file_path": _get_node_uid_path(start_finish_line.scene_file_path),
         "global_position_x": start_finish_line.global_position.x,
         "global_position_y": start_finish_line.global_position.y,
         "global_position_z": start_finish_line.global_position.z,
@@ -108,8 +112,10 @@ func save_track(
             print("persistent node '%s' is not an instanced scene, skipped" % road.name)
             continue
         placed_roads_data.set(
-            location_id,
-            [road.scene_file_path, int(round(road.rotation_degrees.y))])
+            location_id, [
+                _get_node_uid_path(road.scene_file_path),
+                int(round(road.rotation_degrees.y))
+            ])
     save_file.store_line(JSON.stringify(placed_roads_data))
     
     save_file.store_line(JSON.stringify(roads_placed_stack))
@@ -179,6 +185,8 @@ func load_track(uid: int, track_node: Node3D) -> Array:
     var coords_blocked: Dictionary[int, bool] = _load_coords_blocked(json)
     
     save_file.close()
+    
+    _place_dist_signs(roads_placed, roads_placed_stack)
 
     return [
         meta_data, start_finish_line, roads_placed,
@@ -237,3 +245,41 @@ func _load_coords_blocked(json: JSON) -> Dictionary[int, bool]:
         coords_blocked.set(int(location_id_str), true)
     
     return coords_blocked
+
+
+func _get_node_uid_path(scene_file_path: String) -> String:
+    assert(scene_file_path != null)
+    assert(not scene_file_path.is_empty())
+    return ResourceUID.id_to_text(
+        ResourceLoader.get_resource_uid(
+            scene_file_path
+        )
+    )
+
+
+func _place_dist_signs(
+    roads_placed: Dictionary[int, Road],
+    roads_placed_stack: Array[int]
+) -> void:
+    var place_dist_signs: bool = false
+    var start: int = DIST_SIGN_START
+    var gap: int = DIST_SIGN_GAP
+    var signs_placed: int = 0
+    var left: bool = true
+    
+    for i in range(roads_placed_stack.size()-1, -1, -1):
+        var location_id: int = roads_placed_stack.get(i)
+        var road: Road = roads_placed.get(location_id)
+        if road.place_dist_sings_before:
+            place_dist_signs = true
+            left = road.road_angle < 0
+        elif place_dist_signs and (
+                signs_placed >= DIST_SIGN_COUNT or not road.has_dist_signs):
+            place_dist_signs = false
+            start = DIST_SIGN_START
+            signs_placed = 0
+        elif place_dist_signs and road.has_dist_signs:
+            var res: Array[int] = road.place_dist_signs(
+                start, gap, left, signs_placed)
+            start = res.get(0)
+            signs_placed = res.get(1)

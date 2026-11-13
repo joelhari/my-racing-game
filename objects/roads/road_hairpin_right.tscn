@@ -9,5 +9,6 @@ road_name = "Right Hairpin"
 road_angle = -180
 road_next_coords = Vector3i(-1, 0, 1)
 road_coords_blocked = Array[Vector3i]([Vector3i(0, 0, 0), Vector3i(1, 0, 0), Vector3i(0, 0, 1)])
+place_dist_sings_before = true
 
 [node name="track_hairpin_right_borders_low" parent="." unique_id=1261908807 instance=ExtResource("2_gqn1e")]
