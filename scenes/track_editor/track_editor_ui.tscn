@@ -4,6 +4,8 @@
 [ext_resource type="Script" uid="uid://cql3kwd7c1nmj" path="res://scenes/track_editor/road_select.gd" id="2_jjm1s"]
 [ext_resource type="Texture2D" uid="uid://de0ao4ajulab5" path="res://assets/icons/straight_icon.png" id="2_qsvvg"]
 [ext_resource type="Texture2D" uid="uid://ifwsm6k8i1mm" path="res://assets/icons/curve_left_icon.png" id="4_e0s01"]
+[ext_resource type="Texture2D" uid="uid://fv43735yf4dt" path="res://assets/icons/hairpin_left_icon.png" id="4_hwx2h"]
+[ext_resource type="Texture2D" uid="uid://e0vsq5p37pxo" path="res://assets/icons/hairpin_right_icon.png" id="5_2y0p5"]
 [ext_resource type="Texture2D" uid="uid://dcy8jf6403xix" path="res://assets/icons/curve_right_icon.png" id="5_hwx2h"]
 [ext_resource type="Texture2D" uid="uid://djyt3gkvgciji" path="res://assets/icons/curve_left_wide_icon.png" id="6_2y0p5"]
 [ext_resource type="Texture2D" uid="uid://0cbffq7v4qcq" path="res://assets/icons/curve_right_wide_icon.png" id="7_7xr8l"]
@@ -50,7 +52,7 @@ layout_mode = 2
 custom_minimum_size = Vector2(250, 250)
 custom_maximum_size = Vector2(250, 250)
 layout_mode = 2
-icon = ExtResource("8_77hkp")
+icon = ExtResource("4_hwx2h")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("2_jjm1s")
@@ -60,7 +62,7 @@ road_scene_idx = 7
 custom_minimum_size = Vector2(250, 250)
 custom_maximum_size = Vector2(250, 250)
 layout_mode = 2
-icon = ExtResource("9_y68k5")
+icon = ExtResource("5_2y0p5")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("2_jjm1s")
